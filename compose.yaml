@@ -1,0 +1,15 @@
+﻿services:
+  mongo.db.catalog:
+    container_name: mongo.db.catalog.container
+    image: mongo:8.2
+    restart: always
+    ports:
+      - "27030:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - mongo.db.catalog.volume:/data/db
+
+volumes:
+  mongo.db.catalog.volume:
