@@ -1,5 +1,7 @@
+using CourseHeaven.Catalog.Api;
 using CourseHeaven.Catalog.Api.Options;
 using CourseHeaven.Catalog.Api.Repositories;
+using CourseHeaven.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 builder.Services.AddOptionsExtension();
 builder.Services.AddDatabaseServiceExtension();
+builder.Services.AddCommonServiceExtension(typeof(CatalogAssembly));
 
 var app = builder.Build();
 
