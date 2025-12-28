@@ -1,3 +1,4 @@
+using CourseHeaven.Catalog.Api.Features.Categories;
 using CourseHeaven.Catalog.Api;
 using CourseHeaven.Catalog.Api.Options;
 using CourseHeaven.Catalog.Api.Repositories;
@@ -13,6 +14,8 @@ builder.Services.AddDatabaseServiceExtension();
 builder.Services.AddCommonServiceExtension(typeof(CatalogAssembly));
 
 var app = builder.Build();
+
+app.AddCategoryGroupEndpointExtension();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
