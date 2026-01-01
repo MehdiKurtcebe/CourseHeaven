@@ -81,7 +81,6 @@ public class ServiceResult
     public static ServiceResult ErrorFromProblemDetails(ApiException exception)
     {
         if (string.IsNullOrEmpty(exception.Content))
-        {
             return new ServiceResult
             {
                 Status = exception.StatusCode,
@@ -90,7 +89,6 @@ public class ServiceResult
                     Title = exception.Message
                 }
             };
-        }
 
         var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(exception.Content, new JsonSerializerOptions
         {
@@ -185,7 +183,6 @@ public class ServiceResult<T> : ServiceResult
     public new static ServiceResult<T> ErrorFromProblemDetails(ApiException exception)
     {
         if (string.IsNullOrEmpty(exception.Content))
-        {
             return new ServiceResult<T>
             {
                 Status = exception.StatusCode,
@@ -194,7 +191,6 @@ public class ServiceResult<T> : ServiceResult
                     Title = exception.Message
                 }
             };
-        }
 
         var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(exception.Content, new JsonSerializerOptions
         {

@@ -13,8 +13,8 @@ public static class CommonServiceExtensions
 
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining(assembly);
-        
-        services.AddAutoMapper(_ => {}, assembly);
+
+        services.AddAutoMapper(_ => { }, assembly);
 
         return services;
     }
