@@ -1,9 +1,4 @@
-using System.Net;
 using CourseHeaven.Catalog.Api.Repositories;
-using CourseHeaven.Shared;
-using MassTransit;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace CourseHeaven.Catalog.Api.Features.Categories.Create;
 
@@ -16,10 +11,8 @@ public class CreateCategoryCommandHandler(AppDbContext context)
         var categoryExists = await context.Categories.AnyAsync(x => x.Name == request.Name, cancellationToken);
 
         if (categoryExists)
-        {
             return ServiceResult<CreateCategoryResponse>.Error("Category with the same name already exists.",
                 $"The category '{request.Name}' already exists.", HttpStatusCode.BadRequest);
-        }
 
         var category = new Category
         {

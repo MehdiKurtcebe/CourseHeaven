@@ -1,6 +1,5 @@
 using CourseHeaven.Catalog.Api.Features.Categories;
 using CourseHeaven.Catalog.Api.Features.Courses;
-using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver;
 using MongoDB.EntityFrameworkCore.Metadata.Conventions;
 

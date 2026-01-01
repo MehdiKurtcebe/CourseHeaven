@@ -21,7 +21,7 @@ public static class RepositoryExtensions
             var database = mongoClient.GetDatabase(options.DatabaseName);
             return AppDbContext.Create(database);
         });
-        
+
         return services;
     }
 }

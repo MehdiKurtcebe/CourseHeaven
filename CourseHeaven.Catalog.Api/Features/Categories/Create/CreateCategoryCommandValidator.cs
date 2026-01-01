@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace CourseHeaven.Catalog.Api.Features.Categories.Create;
 
 public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCommand>

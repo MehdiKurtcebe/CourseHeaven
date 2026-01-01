@@ -1,10 +1,5 @@
-using AutoMapper;
 using CourseHeaven.Catalog.Api.Features.Categories.Dtos;
 using CourseHeaven.Catalog.Api.Repositories;
-using CourseHeaven.Shared;
-using CourseHeaven.Shared.Extensions;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace CourseHeaven.Catalog.Api.Features.Categories.GetAll;
 

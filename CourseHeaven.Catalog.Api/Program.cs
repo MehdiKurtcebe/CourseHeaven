@@ -1,8 +1,7 @@
-using CourseHeaven.Catalog.Api.Features.Categories;
 using CourseHeaven.Catalog.Api;
+using CourseHeaven.Catalog.Api.Features.Categories;
 using CourseHeaven.Catalog.Api.Options;
 using CourseHeaven.Catalog.Api.Repositories;
-using CourseHeaven.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,10 +21,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/openapi/v1.json", "v1");
-    });
+    app.UseSwaggerUI(options => { options.SwaggerEndpoint("/openapi/v1.json", "v1"); });
 }
 
 app.Run();

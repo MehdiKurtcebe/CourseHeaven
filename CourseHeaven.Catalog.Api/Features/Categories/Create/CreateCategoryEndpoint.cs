@@ -1,6 +1,4 @@
-using CourseHeaven.Shared.Extensions;
 using CourseHeaven.Shared.Filters;
-using MediatR;
 
 namespace CourseHeaven.Catalog.Api.Features.Categories.Create;
 

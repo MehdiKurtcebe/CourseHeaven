@@ -1,5 +1,4 @@
 using CourseHeaven.Catalog.Api.Features.Courses;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MongoDB.EntityFrameworkCore.Extensions;
 
