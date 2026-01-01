@@ -1,5 +1,6 @@
 using CourseHeaven.Catalog.Api.Features.Categories.Create;
 using CourseHeaven.Catalog.Api.Features.Categories.GetAll;
+using CourseHeaven.Catalog.Api.Features.Categories.GetById;
 
 namespace CourseHeaven.Catalog.Api.Features.Categories;
 
@@ -9,6 +10,7 @@ public static class CategoryEndpointExtensions
     {
         app.MapGroup("api/categories")
             .CreateCategoryGroupItemEndpoint()
-            .GetAllCategoryGroupItemEndpoint();
+            .GetAllCategoryGroupItemEndpoint()
+            .GetCategoryByIdGroupItemEndpoint();
     }
 }
