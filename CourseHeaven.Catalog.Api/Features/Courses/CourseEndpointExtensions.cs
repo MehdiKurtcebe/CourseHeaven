@@ -1,4 +1,5 @@
 using CourseHeaven.Catalog.Api.Features.Courses.Create;
+using CourseHeaven.Catalog.Api.Features.Courses.GetAll;
 
 namespace CourseHeaven.Catalog.Api.Features.Courses;
 
@@ -8,6 +9,7 @@ public static class CourseEndpointExtensions
     {
         app.MapGroup("api/courses")
             .WithTags("Courses")
-            .CreateCourseGroupItemEndpoint();
+            .CreateCourseGroupItemEndpoint()
+            .GetAllCoursesGroupItemEndpoint();
     }
 }
