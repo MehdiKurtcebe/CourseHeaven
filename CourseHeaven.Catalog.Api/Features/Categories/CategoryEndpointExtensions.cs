@@ -11,7 +11,7 @@ public static class CategoryEndpointExtensions
         app.MapGroup("api/categories")
             .WithTags("Categories")
             .CreateCategoryGroupItemEndpoint()
-            .GetAllCategoryGroupItemEndpoint()
+            .GetAllCategoriesGroupItemEndpoint()
             .GetCategoryByIdGroupItemEndpoint();
     }
 }
