@@ -16,6 +16,7 @@ public class CreateCourseCommandHandler(AppDbContext context, IMapper mapper)
         var course = mapper.Map<Course>(request);
         course.Id = NewId.NextSequentialGuid();
         course.CreatedAt = DateTime.UtcNow;
+        course.Feature = new Feature { EducatorFullName = "" }; // TODO: Handle feature properly in the future
 
         context.Courses.Add(course);
         await context.SaveChangesAsync(cancellationToken);
