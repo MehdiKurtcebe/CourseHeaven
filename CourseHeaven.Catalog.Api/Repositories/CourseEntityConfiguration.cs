@@ -14,7 +14,7 @@ public class CourseEntityConfiguration : IEntityTypeConfiguration<Course>
         builder.Property(c => c.Name).HasMaxLength(200);
         builder.Property(c => c.Description).HasMaxLength(1000);
         builder.Property(c => c.Price).HasPrecision(18, 2);
-        builder.Property(c => c.Picture).HasMaxLength(1000);
+        builder.Property(c => c.ImageUrl).HasMaxLength(1000);
         builder.OwnsOne(c => c.Feature, featureBuilder =>
         {
             featureBuilder.Property(f => f.EducatorFullName).HasMaxLength(100);
