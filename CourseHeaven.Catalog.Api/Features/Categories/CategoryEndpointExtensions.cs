@@ -9,6 +9,7 @@ public static class CategoryEndpointExtensions
     public static void AddCategoryGroupEndpointExtension(this WebApplication app)
     {
         app.MapGroup("api/categories")
+            .WithTags("Categories")
             .CreateCategoryGroupItemEndpoint()
             .GetAllCategoryGroupItemEndpoint()
             .GetCategoryByIdGroupItemEndpoint();

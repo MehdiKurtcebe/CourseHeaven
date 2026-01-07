@@ -1,5 +1,6 @@
 using CourseHeaven.Catalog.Api.Features.Categories.Dtos;
 using CourseHeaven.Catalog.Api.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CourseHeaven.Catalog.Api.Features.Categories.GetById;
 
@@ -26,8 +27,11 @@ public static class GetCategoryByIdEndpoint
     public static RouteGroupBuilder GetCategoryByIdGroupItemEndpoint(this RouteGroupBuilder group)
     {
         group.MapGet("/{id:guid}",
-            async (IMediator mediator, Guid id) =>
-                (await mediator.Send(new GetCategoryByIdQuery(id))).ToGenericResult());
+                async (IMediator mediator, Guid id) =>
+                    (await mediator.Send(new GetCategoryByIdQuery(id))).ToGenericResult())
+            .WithName("GetCategoryById")
+            .Produces<CategoryDto>()
+            .Produces<ProblemDetails>(StatusCodes.Status404NotFound);
 
         return group;
     }
