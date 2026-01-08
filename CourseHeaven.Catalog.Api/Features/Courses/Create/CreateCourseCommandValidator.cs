@@ -6,19 +6,20 @@ public class CreateCourseCommandValidator : AbstractValidator<CreateCourseComman
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("{PropertyName} is required.")
-            .MaximumLength(200).WithMessage("{PropertyName} must not exceed 200 characters.");
+            .MaximumLength(200).WithMessage("{PropertyName} must not exceed {MaxLength} characters.");
 
         RuleFor(x => x.Description)
             .NotEmpty().WithMessage("{PropertyName} is required.")
-            .MaximumLength(1000).WithMessage("{PropertyName} must not exceed 1000 characters.");
+            .MaximumLength(1000).WithMessage("{PropertyName} must not exceed {MaxLength} characters.");
 
         RuleFor(x => x.Price)
             .PrecisionScale(18, 2, true)
-            .WithMessage("{PropertyName} must have maximum 18 digits in total and 2 decimal places.")
-            .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to zero.");
+            .WithMessage(
+                "{PropertyName} must have maximum {ExpectedPrecision} digits in total and {ExpectedScale} decimal places.")
+            .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to {ComparisonValue}.");
 
         RuleFor(x => x.ImageUrl)
-            .MaximumLength(500).WithMessage("{PropertyName} must not exceed 500 characters.");
+            .MaximumLength(500).WithMessage("{PropertyName} must not exceed {MaxLength} characters.");
 
         RuleFor(x => x.CategoryId)
             .NotEmpty().WithMessage("{PropertyName} is required.");

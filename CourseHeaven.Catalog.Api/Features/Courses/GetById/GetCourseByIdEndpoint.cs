@@ -16,7 +16,7 @@ public class GetCourseByIdHandler(AppDbContext context, IMapper mapper)
         if (course == null)
             return ServiceResult<CourseDto>.Error("Course not found",
                 $"The course with ID {request.Id} was not found.", HttpStatusCode.NotFound);
-        
+
         var category = await context.Categories.FindAsync([course.CategoryId], cancellationToken);
         course.Category = category!;
 
