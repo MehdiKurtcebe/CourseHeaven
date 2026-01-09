@@ -6,6 +6,6 @@ public class CreateCategoryCommandValidator : AbstractValidator<CreateCategoryCo
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("{PropertyName} cannot be empty.")
-            .Length(4, 25).WithMessage("{PropertyName} must be between {MinLength} and {MaxLength} characters.");
+            .Length(4, 100).WithMessage("{PropertyName} must be between {MinLength} and {MaxLength} characters.");
     }
 }
