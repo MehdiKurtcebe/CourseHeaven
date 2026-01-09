@@ -1,4 +1,5 @@
 using CourseHeaven.Catalog.Api.Features.Categories.Create;
+using CourseHeaven.Catalog.Api.Features.Categories.Delete;
 using CourseHeaven.Catalog.Api.Features.Categories.GetAll;
 using CourseHeaven.Catalog.Api.Features.Categories.GetById;
 
@@ -12,6 +13,7 @@ public static class CategoryEndpointExtensions
             .WithTags("Categories")
             .CreateCategoryGroupItemEndpoint()
             .GetAllCategoriesGroupItemEndpoint()
-            .GetCategoryByIdGroupItemEndpoint();
+            .GetCategoryByIdGroupItemEndpoint()
+            .DeleteCategoryGroupItemEndpoint();
     }
 }
