@@ -1,6 +1,7 @@
 using CourseHeaven.Catalog.Api.Features.Courses.Create;
 using CourseHeaven.Catalog.Api.Features.Courses.Delete;
 using CourseHeaven.Catalog.Api.Features.Courses.GetAll;
+using CourseHeaven.Catalog.Api.Features.Courses.GetAllByUserId;
 using CourseHeaven.Catalog.Api.Features.Courses.GetById;
 using CourseHeaven.Catalog.Api.Features.Courses.Update;
 
@@ -14,6 +15,7 @@ public static class CourseEndpointExtensions
             .WithTags("Courses")
             .CreateCourseGroupItemEndpoint()
             .GetAllCoursesGroupItemEndpoint()
+            .GetAllCoursesByUserIdGroupItemEndpoint()
             .GetCourseByIdGroupItemEndpoint()
             .UpdateCourseGroupItemEndpoint()
             .DeleteCourseGroupItemEndpoint();
