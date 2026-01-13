@@ -1,3 +1,4 @@
+using Asp.Versioning.Builder;
 using CourseHeaven.Catalog.Api.Features.Courses.Create;
 using CourseHeaven.Catalog.Api.Features.Courses.Delete;
 using CourseHeaven.Catalog.Api.Features.Courses.GetAll;
@@ -9,10 +10,11 @@ namespace CourseHeaven.Catalog.Api.Features.Courses;
 
 public static class CourseEndpointExtensions
 {
-    public static void AddCourseGroupEndpointExtension(this WebApplication app)
+    public static void AddCourseGroupEndpointExtension(this WebApplication app, ApiVersionSet apiVersionSet)
     {
-        app.MapGroup("api/courses")
+        app.MapGroup("api/v{version:apiVersion}/courses")
             .WithTags("Courses")
+            .WithApiVersionSet(apiVersionSet)
             .CreateCourseGroupItemEndpoint()
             .GetAllCoursesGroupItemEndpoint()
             .GetAllCoursesByUserIdGroupItemEndpoint()

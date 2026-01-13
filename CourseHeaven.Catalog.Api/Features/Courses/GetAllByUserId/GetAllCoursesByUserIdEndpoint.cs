@@ -32,6 +32,7 @@ public static class GetAllCoursesByUserIdEndpoint
                 async (IMediator mediator, Guid userId) =>
                     (await mediator.Send(new GetAllCoursesByUserIdQuery(userId))).ToGenericResult())
             .WithName("GetAllCoursesByUserId")
+            .MapToApiVersion(1, 0)
             .Produces<List<CourseDto>>();
 
         return group;

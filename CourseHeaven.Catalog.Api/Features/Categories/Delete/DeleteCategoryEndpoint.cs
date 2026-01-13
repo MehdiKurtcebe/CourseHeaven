@@ -34,6 +34,7 @@ public static class DeleteCategoryEndpoint
                 async (IMediator mediator, Guid id) =>
                     (await mediator.Send(new DeleteCategoryCommand(id))).ToGenericResult())
             .WithName("DeleteCategory")
+            .MapToApiVersion(1, 0)
             .Produces(StatusCodes.Status204NoContent)
             .Produces<ProblemDetails>(StatusCodes.Status404NotFound)
             .Produces<ProblemDetails>(StatusCodes.Status409Conflict);

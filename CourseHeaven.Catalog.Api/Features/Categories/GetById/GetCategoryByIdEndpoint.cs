@@ -30,6 +30,7 @@ public static class GetCategoryByIdEndpoint
                 async (IMediator mediator, Guid id) =>
                     (await mediator.Send(new GetCategoryByIdQuery(id))).ToGenericResult())
             .WithName("GetCategoryById")
+            .MapToApiVersion(1, 0)
             .Produces<CategoryDto>()
             .Produces<ProblemDetails>(StatusCodes.Status404NotFound);
 

@@ -11,6 +11,7 @@ public static class UpdateCategoryEndpoint
                 async (UpdateCategoryCommand command, IMediator mediator) =>
                     (await mediator.Send(command)).ToGenericResult())
             .WithName("UpdateCategory")
+            .MapToApiVersion(1, 0)
             .Produces(StatusCodes.Status204NoContent)
             .Produces<ProblemDetails>(StatusCodes.Status404NotFound)
             .AddEndpointFilter<ValidationFilter<UpdateCategoryCommand>>();

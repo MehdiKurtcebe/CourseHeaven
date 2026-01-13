@@ -33,6 +33,7 @@ public static class GetCourseByIdEndpoint
                 async (IMediator mediator, Guid id) =>
                     (await mediator.Send(new GetCourseByIdQuery(id))).ToGenericResult())
             .WithName("GetCourseById")
+            .MapToApiVersion(1, 0)
             .Produces<CourseDto>()
             .Produces<ProblemDetails>(StatusCodes.Status404NotFound);
 

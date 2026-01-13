@@ -11,6 +11,7 @@ public static class CreateCategoryEndpoint
                 async (CreateCategoryCommand command, IMediator mediator) =>
                     (await mediator.Send(command)).ToGenericResult())
             .WithName("CreateCategory")
+            .MapToApiVersion(1, 0)
             .Produces<CreateCategoryResponse>(StatusCodes.Status201Created)
             .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
             .AddEndpointFilter<ValidationFilter<CreateCategoryCommand>>();

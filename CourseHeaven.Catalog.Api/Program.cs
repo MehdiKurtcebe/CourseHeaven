@@ -12,6 +12,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddOptionsExtension();
 builder.Services.AddDatabaseServiceExtension();
 builder.Services.AddCommonServiceExtension(typeof(CatalogAssembly));
+builder.Services.AddVersioningExtension();
 
 var app = builder.Build();
 
@@ -19,8 +20,8 @@ app.AddSeedDataExtension().ContinueWith(x =>
 {
     Console.WriteLine(x.IsFaulted ? x.Exception?.Message : "Seed data added successfully.");
 });
-app.AddCategoryGroupEndpointExtension();
-app.AddCourseGroupEndpointExtension();
+app.AddCategoryGroupEndpointExtension(app.AddVersionSetExtension());
+app.AddCourseGroupEndpointExtension(app.AddVersionSetExtension());
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

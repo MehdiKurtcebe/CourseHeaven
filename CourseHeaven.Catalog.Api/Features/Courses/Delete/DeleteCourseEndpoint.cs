@@ -30,6 +30,7 @@ public static class DeleteCourseEndpoint
                 async (IMediator mediator, Guid id) =>
                     (await mediator.Send(new DeleteCourseCommand(id))).ToGenericResult())
             .WithName("DeleteCourse")
+            .MapToApiVersion(1, 0)
             .Produces(StatusCodes.Status204NoContent)
             .Produces<ProblemDetails>(StatusCodes.Status404NotFound);
 
