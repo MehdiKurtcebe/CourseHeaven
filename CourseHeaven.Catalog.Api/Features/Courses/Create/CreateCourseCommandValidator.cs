@@ -19,7 +19,7 @@ public class CreateCourseCommandValidator : AbstractValidator<CreateCourseComman
             .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to {ComparisonValue}.");
 
         RuleFor(x => x.ImageUrl)
-            .MaximumLength(500).WithMessage("{PropertyName} must not exceed {MaxLength} characters.");
+            .MaximumLength(1000).WithMessage("{PropertyName} must not exceed {MaxLength} characters.");
 
         RuleFor(x => x.CategoryId)
             .NotEmpty().WithMessage("{PropertyName} is required.");

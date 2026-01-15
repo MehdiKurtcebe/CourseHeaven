@@ -20,6 +20,6 @@ public class UpdateCourseCommandValidator : AbstractValidator<UpdateCourseComman
             .GreaterThanOrEqualTo(0).WithMessage("{PropertyName} must be greater than or equal to zero.");
 
         RuleFor(x => x.ImageUrl)
-            .MaximumLength(500).WithMessage("{PropertyName} must not exceed 500 characters.");
+            .MaximumLength(1000).WithMessage("{PropertyName} must not exceed 500 characters.");
     }
 }
