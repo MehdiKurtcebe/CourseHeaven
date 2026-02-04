@@ -1,3 +1,4 @@
+using CourseHeaven.Shared.Services;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using SharpGrip.FluentValidation.AutoValidation.Endpoints.Extensions;
@@ -13,6 +14,8 @@ public static class CommonServiceExtensions
 
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining(assembly);
+
+        services.AddScoped<IIdentityService, IdentityServiceStub>();
 
         services.AddAutoMapper(_ => { }, assembly);
 
