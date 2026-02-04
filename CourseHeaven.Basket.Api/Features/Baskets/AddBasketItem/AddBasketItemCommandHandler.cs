@@ -2,12 +2,13 @@ using System.Text.Json;
 using CourseHeaven.Basket.Api.Const;
 using CourseHeaven.Basket.Api.Features.Baskets.Dtos;
 using CourseHeaven.Shared;
+using CourseHeaven.Shared.Services;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace CourseHeaven.Basket.Api.Features.Baskets.AddBasketItem;
 
-public class AddBasketItemCommandHandler(IDistributedCache distributedCache)
+public class AddBasketItemCommandHandler(IDistributedCache distributedCache, IIdentityService identityService)
     : IRequestHandler<AddBasketItemCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(AddBasketItemCommand request, CancellationToken cancellationToken)
@@ -20,7 +21,7 @@ public class AddBasketItemCommandHandler(IDistributedCache distributedCache)
             request.CourseImageUrl
         );
 
-        var userId = Guid.NewGuid(); // TODO: Get user ID from the token in the future
+        var userId = identityService.UserId;
         var cacheKey = string.Format(BasketConst.BasketCacheKey, userId);
         var basket = await distributedCache.GetStringAsync(cacheKey, cancellationToken);
 
