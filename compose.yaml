@@ -22,7 +22,7 @@
       - mongo.db.catalog.volume:/data/db
   redis.db.basket:
     container_name: redis.db.basket.container
-    image: redis:8.4
+    image: redis:8.6
     restart: always
     ports:
       - "63790:6379"
