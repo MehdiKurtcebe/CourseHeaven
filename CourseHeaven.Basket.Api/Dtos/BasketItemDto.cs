@@ -1,4 +1,4 @@
-namespace CourseHeaven.Basket.Api.Features.Baskets.Dtos;
+namespace CourseHeaven.Basket.Api.Dtos;
 
 public record BasketItemDto(
     Guid CourseId,

@@ -1,40 +1,41 @@
 using System.Net;
 using System.Text.Json;
-using CourseHeaven.Basket.Api.Const;
-using CourseHeaven.Basket.Api.Features.Baskets.Dtos;
 using CourseHeaven.Shared;
 using CourseHeaven.Shared.Extensions;
-using CourseHeaven.Shared.Services;
+using CourseHeaven.Shared.Filters;
+using FluentValidation;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
 
 namespace CourseHeaven.Basket.Api.Features.Baskets.DeleteBasketItem;
 
 public record DeleteBasketItemCommand(Guid CourseId) : IRequestByServiceResult;
 
-public class DeleteBasketItemCommandHandler(IDistributedCache distributedCache, IIdentityService identityService)
+public class DeleteBasketItemCommandHandler(BasketService basketService)
     : IRequestHandler<DeleteBasketItemCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(DeleteBasketItemCommand request, CancellationToken cancellationToken)
     {
-        var userId = identityService.UserId;
-        var cacheKey = string.Format(BasketConst.BasketCacheKey, userId);
-        var basket = await distributedCache.GetStringAsync(cacheKey, cancellationToken);
-
-        if (string.IsNullOrEmpty(basket))
+        var basketJson = await basketService.GetBasketFromCacheAsync(cancellationToken);
+        if (string.IsNullOrEmpty(basketJson))
             return ServiceResult.Error("Basket not found", HttpStatusCode.NotFound);
 
-        var basketDto = JsonSerializer.Deserialize<BasketDto>(basket) ?? new BasketDto(userId, []);
-        var basketItemToDelete = basketDto.Items.FirstOrDefault(i => i.CourseId == request.CourseId);
+        var basket = JsonSerializer.Deserialize<Data.Basket>(basketJson);
+        var basketItemToDelete = basket?.Items.FirstOrDefault(item => item.CourseId == request.CourseId);
         if (basketItemToDelete is null)
             return ServiceResult.Error("Basket item not found", HttpStatusCode.NotFound);
 
-        basketDto.Items.Remove(basketItemToDelete);
-        var updatedBasket = JsonSerializer.Serialize(basketDto);
-        await distributedCache.SetStringAsync(cacheKey, updatedBasket, cancellationToken);
+        basket!.Items.Remove(basketItemToDelete);
+        await basketService.CreateBasketCacheAsync(basket, cancellationToken);
 
         return ServiceResult.SuccessAsNoContent();
+    }
+}
+
+public class DeleteBasketItemCommandValidator : AbstractValidator<DeleteBasketItemCommand>
+{
+    public DeleteBasketItemCommandValidator()
+    {
+        RuleFor(c => c.CourseId).NotEmpty().WithMessage("{PropertyName} is required.");
     }
 }
 
@@ -48,7 +49,8 @@ public static class DeleteBasketItemEndpoint
             .WithName("DeleteBasketItem")
             .MapToApiVersion(1, 0)
             .Produces(StatusCodes.Status204NoContent)
-            .Produces<ProblemDetails>(StatusCodes.Status404NotFound);
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .AddEndpointFilter<ValidationFilter<DeleteBasketItemCommandValidator>>();
 
         return group;
     }
