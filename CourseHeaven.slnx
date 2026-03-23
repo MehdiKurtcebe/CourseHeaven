@@ -1,0 +1,17 @@
+<Solution>
+    <Folder Name="/Solution Items/">
+        <File Path=".env"/>
+        <File Path="compose.yaml"/>
+    </Folder>
+    <Folder Name="/src/"/>
+    <Folder Name="/src/services/"/>
+    <Folder Name="/src/services/basket/">
+        <Project Path="CourseHeaven.Basket.Api/CourseHeaven.Basket.Api.csproj"/>
+    </Folder>
+    <Folder Name="/src/services/catalog/">
+        <Project Path="CourseHeaven.Catalog.Api/CourseHeaven.Catalog.Api.csproj"/>
+    </Folder>
+    <Folder Name="/src/shared/">
+        <Project Path="CourseHeaven.Shared/CourseHeaven.Shared.csproj"/>
+    </Folder>
+</Solution>
