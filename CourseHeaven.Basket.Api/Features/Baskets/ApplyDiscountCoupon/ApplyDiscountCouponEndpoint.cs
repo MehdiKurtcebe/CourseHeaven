@@ -1,9 +1,4 @@
-﻿using CourseHeaven.Shared;
-using CourseHeaven.Shared.Extensions;
-using CourseHeaven.Shared.Filters;
-using MediatR;
-
-namespace CourseHeaven.Basket.Api.Features.Baskets.ApplyDiscountCoupon;
+﻿namespace CourseHeaven.Basket.Api.Features.Baskets.ApplyDiscountCoupon;
 
 public static class ApplyDiscountCouponEndpoint
 {

@@ -1,7 +1,3 @@
-using CourseHeaven.Shared.Extensions;
-using CourseHeaven.Shared.Filters;
-using MediatR;
-
 namespace CourseHeaven.Basket.Api.Features.Baskets.AddBasketItem;
 
 public static class AddBasketItemEndpoint

@@ -1,8 +1,4 @@
-using System.Text.Json;
 using CourseHeaven.Basket.Api.Data;
-using CourseHeaven.Shared;
-using CourseHeaven.Shared.Services;
-using MediatR;
 
 namespace CourseHeaven.Basket.Api.Features.Baskets.AddBasketItem;
 

@@ -1,10 +1,5 @@
-using System.Net;
-using System.Text.Json;
 using AutoMapper;
 using CourseHeaven.Basket.Api.Dtos;
-using CourseHeaven.Shared;
-using CourseHeaven.Shared.Extensions;
-using MediatR;
 
 namespace CourseHeaven.Basket.Api.Features.Baskets.GetBasket;
 

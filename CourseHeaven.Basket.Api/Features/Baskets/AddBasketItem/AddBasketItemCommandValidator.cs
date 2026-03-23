@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace CourseHeaven.Basket.Api.Features.Baskets.AddBasketItem;
 
 public class AddBasketItemCommandValidator : AbstractValidator<AddBasketItemCommand>

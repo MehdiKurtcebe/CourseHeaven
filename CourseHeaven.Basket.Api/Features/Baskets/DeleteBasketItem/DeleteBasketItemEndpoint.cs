@@ -1,11 +1,3 @@
-using System.Net;
-using System.Text.Json;
-using CourseHeaven.Shared;
-using CourseHeaven.Shared.Extensions;
-using CourseHeaven.Shared.Filters;
-using FluentValidation;
-using MediatR;
-
 namespace CourseHeaven.Basket.Api.Features.Baskets.DeleteBasketItem;
 
 public record DeleteBasketItemCommand(Guid CourseId) : IRequestByServiceResult;

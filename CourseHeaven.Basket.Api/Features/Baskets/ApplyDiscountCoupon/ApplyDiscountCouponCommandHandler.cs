@@ -1,9 +1,4 @@
-﻿using System.Net;
-using System.Text.Json;
-using CourseHeaven.Shared;
-using MediatR;
-
-namespace CourseHeaven.Basket.Api.Features.Baskets.ApplyDiscountCoupon;
+﻿namespace CourseHeaven.Basket.Api.Features.Baskets.ApplyDiscountCoupon;
 
 public class ApplyDiscountCouponCommandHandler(BasketService basketService)
     : IRequestHandler<ApplyDiscountCouponCommand, ServiceResult>

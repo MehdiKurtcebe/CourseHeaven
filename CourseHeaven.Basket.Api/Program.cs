@@ -1,6 +1,5 @@
 using CourseHeaven.Basket.Api;
 using CourseHeaven.Basket.Api.Features.Baskets;
-using CourseHeaven.Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using CourseHeaven.Basket.Api.Const;
-using CourseHeaven.Shared.Services;
+﻿using CourseHeaven.Basket.Api.Const;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace CourseHeaven.Basket.Api.Features.Baskets;

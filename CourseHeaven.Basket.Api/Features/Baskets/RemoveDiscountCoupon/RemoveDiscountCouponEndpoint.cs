@@ -1,10 +1,4 @@
-﻿using System.Net;
-using System.Text.Json;
-using CourseHeaven.Shared;
-using CourseHeaven.Shared.Extensions;
-using MediatR;
-
-namespace CourseHeaven.Basket.Api.Features.Baskets.RemoveDiscountCoupon;
+﻿namespace CourseHeaven.Basket.Api.Features.Baskets.RemoveDiscountCoupon;
 
 public record RemoveDiscountCouponCommand : IRequestByServiceResult;
 

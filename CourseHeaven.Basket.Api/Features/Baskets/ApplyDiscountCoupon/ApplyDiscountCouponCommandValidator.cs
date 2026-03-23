@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace CourseHeaven.Basket.Api.Features.Baskets.ApplyDiscountCoupon;
+﻿namespace CourseHeaven.Basket.Api.Features.Baskets.ApplyDiscountCoupon;
 
 public class ApplyDiscountCouponCommandValidator : AbstractValidator<ApplyDiscountCouponCommand>
 {
