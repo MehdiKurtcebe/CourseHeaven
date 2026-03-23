@@ -3,12 +3,14 @@ using CourseHeaven.Catalog.Api.Features.Categories;
 using CourseHeaven.Catalog.Api.Features.Courses;
 using CourseHeaven.Catalog.Api.Options;
 using CourseHeaven.Catalog.Api.Repositories;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+string[] versions = ["v1"];
+foreach (var version in versions) builder.Services.AddOpenApi(version);
 builder.Services.AddOptionsExtension();
 builder.Services.AddDatabaseServiceExtension();
 builder.Services.AddCommonServiceExtension(typeof(CatalogAssembly));
@@ -28,7 +30,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 
-    app.UseSwaggerUI(options => { options.SwaggerEndpoint("/openapi/v1.json", "v1"); });
+    app.MapScalarApiReference(options => { options.AddDocuments(versions); });
 }
 
 app.Run();
