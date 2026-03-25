@@ -14,6 +14,9 @@
     <Folder Name="/src/services/discount/">
         <Project Path="CourseHeaven.Discount.Api/CourseHeaven.Discount.Api.csproj"/>
     </Folder>
+    <Folder Name="/src/services/file/">
+        <Project Path="CourseHeaven.File.Api/CourseHeaven.File.Api.csproj"/>
+    </Folder>
     <Folder Name="/src/shared/">
         <Project Path="CourseHeaven.Shared/CourseHeaven.Shared.csproj"/>
     </Folder>
