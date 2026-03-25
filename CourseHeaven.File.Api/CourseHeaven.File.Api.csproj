@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Features\File\"/>
+        <Folder Include="wwwroot\files\"/>
     </ItemGroup>
 
 </Project>
