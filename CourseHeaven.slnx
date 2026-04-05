@@ -17,6 +17,17 @@
     <Folder Name="/src/services/file/">
         <Project Path="CourseHeaven.File.Api/CourseHeaven.File.Api.csproj"/>
     </Folder>
+    <Folder Name="/src/services/order/"/>
+    <Folder Name="/src/services/order/api/">
+        <Project Path="CourseHeaven.Order.Api/CourseHeaven.Order.Api.csproj"/>
+    </Folder>
+    <Folder Name="/src/services/order/core/">
+        <Project Path="CourseHeaven.Order.Application/CourseHeaven.Order.Application.csproj"/>
+        <Project Path="CourseHeaven.Order.Domain/CourseHeaven.Order.Domain.csproj"/>
+    </Folder>
+    <Folder Name="/src/services/order/infrastructure/">
+        <Project Path="CourseHeaven.Order.Persistence/CourseHeaven.Order.Persistence.csproj"/>
+    </Folder>
     <Folder Name="/src/shared/">
         <Project Path="CourseHeaven.Shared/CourseHeaven.Shared.csproj"/>
     </Folder>
