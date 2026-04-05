@@ -11,7 +11,7 @@ public static class GetDiscountByCouponCodeEndpoint
                     (await mediator.Send(new GetDiscountByCouponCodeQuery(code))).ToGenericResult())
             .WithName("GetDiscountByCouponCode")
             .MapToApiVersion(1, 0)
-            .Produces<GetDiscountByCouponCodeQueryResponse>(StatusCodes.Status200OK)
+            .Produces<GetDiscountByCouponCodeQueryResponse>()
             .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
             .Produces<ProblemDetails>(StatusCodes.Status404NotFound);
 

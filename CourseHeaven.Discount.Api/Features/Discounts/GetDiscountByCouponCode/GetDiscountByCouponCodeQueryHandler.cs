@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using CourseHeaven.Discount.Api.Repositories;
-using CourseHeaven.Shared.Services;
 
 namespace CourseHeaven.Discount.Api.Features.Discounts.GetDiscountByCouponCode;
 

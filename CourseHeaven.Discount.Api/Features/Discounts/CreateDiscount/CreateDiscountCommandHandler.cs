@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using CourseHeaven.Discount.Api.Repositories;
-using CourseHeaven.Shared.Services;
 using MassTransit;
 
 namespace CourseHeaven.Discount.Api.Features.Discounts.CreateDiscount;
