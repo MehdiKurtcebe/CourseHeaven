@@ -15,7 +15,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         // modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         modelBuilder.ApplyConfiguration(new OrderConfiguration());
         modelBuilder.ApplyConfiguration(new OrderItemConfiguration());
-        
+
         base.OnModelCreating(modelBuilder);
     }
 }

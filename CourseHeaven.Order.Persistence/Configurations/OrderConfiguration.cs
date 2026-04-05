@@ -13,7 +13,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Domain.Entities.Order
 
         builder.Property(o => o.OrderCode)
             .IsRequired();
-        
+
         builder.Property(oi => oi.Status)
             .HasConversion<string>()
             .IsRequired();
@@ -24,17 +24,17 @@ public class OrderConfiguration : IEntityTypeConfiguration<Domain.Entities.Order
         builder.Property(o => o.TotalPrice)
             .IsRequired()
             .HasColumnType("decimal(18,2)");
-        
+
         builder.Property(o => o.DiscountRate)
             .IsRequired()
             .HasColumnType("decimal(3,3)");
-        
+
         builder.Property(oi => oi.InvoiceAddress)
             .IsRequired()
             .HasMaxLength(500);
 
         builder.Property(oi => oi.PaymentId);
-        
+
         builder.Property(oi => oi.CreatedAt)
             .IsRequired();
 
