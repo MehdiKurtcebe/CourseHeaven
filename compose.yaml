@@ -50,8 +50,20 @@
       start_period: 5s
     volumes:
       - mongo.db.discount.volume:/data/db
+  sqlserver.db.order:
+    container_name: sqlserver.db.order.container
+    image: mcr.microsoft.com/mssql/server:2025-latest
+    restart: always
+    ports:
+      - "14330:1433"
+    environment:
+      SA_PASSWORD: ${SQLSERVER_PASSWORD}
+      ACCEPT_EULA: "Y"
+    volumes:
+      - sqlserver.db.order.volume:/var/opt/mssql
 
 volumes:
   mongo.db.catalog.volume:
   redis.db.basket.volume:
   mongo.db.discount.volume:
+  sqlserver.db.order.volume:
