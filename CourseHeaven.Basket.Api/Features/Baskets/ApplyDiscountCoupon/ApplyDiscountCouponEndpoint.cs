@@ -11,7 +11,7 @@ public static class ApplyDiscountCouponEndpoint
             .MapToApiVersion(1, 0)
             .Produces<ServiceResult>(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .AddEndpointFilter<ValidationFilter<ApplyDiscountCouponCommandValidator>>();
+            .AddEndpointFilter<ValidationFilter<ApplyDiscountCouponCommand>>();
 
         return group;
     }

@@ -42,7 +42,7 @@ public static class DeleteBasketItemEndpoint
             .MapToApiVersion(1, 0)
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
-            .AddEndpointFilter<ValidationFilter<DeleteBasketItemCommandValidator>>();
+            .AddEndpointFilter<ValidationFilter<DeleteBasketItemCommand>>();
 
         return group;
     }
