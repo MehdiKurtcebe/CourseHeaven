@@ -43,7 +43,7 @@ public class Order : BaseEntity<Guid>
         {
             ProductId = productId,
             ProductName = productName,
-            ProductPrice = productPrice
+            ProductPrice = productPrice * (1 - DiscountRate)
         };
 
         OrderItems.Add(orderItem);
@@ -56,6 +56,7 @@ public class Order : BaseEntity<Guid>
         ArgumentOutOfRangeException.ThrowIfGreaterThan(discountRate, 1);
 
         DiscountRate = discountRate;
+        OrderItems.ForEach(item => item.ProductPrice *= 1 - discountRate);
         CalculateTotalPrice();
     }
 
@@ -72,7 +73,7 @@ public class Order : BaseEntity<Guid>
 
     private void CalculateTotalPrice()
     {
-        TotalPrice = OrderItems.Sum(item => item.ProductPrice) * (1 - DiscountRate);
+        TotalPrice = OrderItems.Sum(item => item.ProductPrice);
     }
 }
 
