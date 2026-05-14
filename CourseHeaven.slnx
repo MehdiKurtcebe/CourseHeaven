@@ -28,6 +28,9 @@
     <Folder Name="/src/services/order/infrastructure/">
         <Project Path="CourseHeaven.Order.Persistence/CourseHeaven.Order.Persistence.csproj"/>
     </Folder>
+    <Folder Name="/src/services/payment/">
+        <Project Path="CourseHeaven.Payment.Api/CourseHeaven.Payment.Api.csproj"/>
+    </Folder>
     <Folder Name="/src/shared/">
         <Project Path="CourseHeaven.Shared/CourseHeaven.Shared.csproj"/>
     </Folder>
