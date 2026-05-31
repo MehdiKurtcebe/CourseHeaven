@@ -17,6 +17,9 @@
     <Folder Name="/src/services/file/">
         <Project Path="CourseHeaven.File.Api/CourseHeaven.File.Api.csproj"/>
     </Folder>
+    <Folder Name="/src/services/gateway/">
+        <Project Path="CourseHeaven.Gateway/CourseHeaven.Gateway.csproj"/>
+    </Folder>
     <Folder Name="/src/services/order/"/>
     <Folder Name="/src/services/order/api/">
         <Project Path="CourseHeaven.Order.Api/CourseHeaven.Order.Api.csproj"/>
