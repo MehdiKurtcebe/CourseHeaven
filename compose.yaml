@@ -1,7 +1,7 @@
 ﻿services:
   mongo.db.catalog:
     container_name: mongo.db.catalog.container
-    image: mongo:8.2
+    image: mongo:8.3
     restart: always
     ports:
       - "27030:27017"
@@ -22,7 +22,7 @@
       - mongo.db.catalog.volume:/data/db
   redis.db.basket:
     container_name: redis.db.basket.container
-    image: redis:8.6
+    image: redis:8.8
     restart: always
     ports:
       - "63790:6379"
@@ -31,7 +31,7 @@
       - redis.db.basket.volume:/data
   mongo.db.discount:
     container_name: mongo.db.discount.container
-    image: mongo:8.2
+    image: mongo:8.3
     restart: always
     ports:
       - "27031:27017"
