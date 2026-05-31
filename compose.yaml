@@ -61,9 +61,44 @@
       ACCEPT_EULA: "Y"
     volumes:
       - sqlserver.db.order.volume:/var/opt/mssql
+  keycloak:
+    container_name: keycloak.container
+    image: quay.io/keycloak/keycloak:26.6.2
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      KC_HOSTNAME_PORT: 8080
+      KC_HOSTNAME_STRICT_BACKCHANNEL: false
+      KC_HTTP_ENABLED: true
+      KC_HOSTNAME_STRICT_HTTPS: false
+      KC_HOSTNAME_STRICT: false
+      KC_HEALTH_ENABLED: true
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres.db.keycloak/${POSTGRES_DB}
+      KC_DB_USERNAME: ${POSTGRES_USER}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+    command: start
+    depends_on:
+      - postgres.db.keycloak
+  postgres.db.keycloak:
+      container_name: postgres.db.keycloak.container
+      image: postgres:18.4
+      restart: always
+      ports:
+        - "54320:5432"
+      environment:
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      volumes:
+        - postgres.db.keycloak.volume:/var/lib/postgresql
 
 volumes:
   mongo.db.catalog.volume:
   redis.db.basket.volume:
   mongo.db.discount.volume:
   sqlserver.db.order.volume:
+  postgres.db.keycloak.volume:
