@@ -4,6 +4,12 @@ using CourseHeaven.Shared.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Scalar.AspNetCore;
 
+// Ensure static file folders exist at startup.
+var webRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+var filesPath = Path.Combine(webRootPath, "files");
+Directory.CreateDirectory(webRootPath);
+Directory.CreateDirectory(filesPath);
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
