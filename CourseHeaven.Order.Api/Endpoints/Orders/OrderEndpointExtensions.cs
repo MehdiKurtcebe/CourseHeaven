@@ -9,6 +9,7 @@ public static class OrderEndpointExtensions
         app.MapGroup("api/v{version:apiVersion}/orders").WithTags("Orders")
             .WithApiVersionSet(apiVersionSet)
             .CreateOrderGroupItemEndpoint()
-            .GetOrdersGroupItemEndpoint();
+            .GetOrdersGroupItemEndpoint()
+            .RequireAuthorization();
     }
 }
