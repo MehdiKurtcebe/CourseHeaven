@@ -13,7 +13,8 @@ public static class CreatePaymentEndpoint
             .WithName("CreatePayment")
             .MapToApiVersion(1, 0)
             .Produces<Guid>()
-            .Produces<ProblemDetails>(StatusCodes.Status400BadRequest);
+            .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
+            .RequireAuthorization("Password");
 
         return group;
     }

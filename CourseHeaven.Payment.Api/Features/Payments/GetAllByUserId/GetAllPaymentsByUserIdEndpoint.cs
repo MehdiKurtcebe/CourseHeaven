@@ -13,7 +13,8 @@ public static class GetAllPaymentsByUserIdEndpoint
             .WithName("GetAllPaymentsByUserId")
             .MapToApiVersion(1, 0)
             .Produces<List<GetAllPaymentsByUserIdResponse>>()
-            .Produces<ProblemDetails>(StatusCodes.Status400BadRequest);
+            .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
+            .RequireAuthorization("ClientCredential");
 
         return group;
     }

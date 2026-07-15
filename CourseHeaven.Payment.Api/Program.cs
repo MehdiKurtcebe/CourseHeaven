@@ -14,10 +14,13 @@ foreach (var version in versions) builder.Services.AddOpenApi(version);
 builder.Services.AddDbContext<AppDbContext>(options => { options.UseInMemoryDatabase("payment-in-memory-db"); });
 builder.Services.AddCommonServiceExtension(typeof(PaymentAssembly));
 builder.Services.AddVersioningExtension();
+builder.Services.AddAuthenticationAuthorizationExtension(builder.Configuration);
 
 var app = builder.Build();
 
 app.AddPaymentGroupEndpointExtension(app.AddVersionSetExtension());
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
