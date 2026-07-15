@@ -15,10 +15,13 @@ builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
+builder.Services.AddAuthenticationAuthorizationExtension(builder.Configuration);
 
 var app = builder.Build();
 
 app.AddBasketGroupEndpointExtension(app.AddVersionSetExtension());
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
