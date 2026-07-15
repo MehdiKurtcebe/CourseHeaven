@@ -20,9 +20,12 @@ builder.Services.AddSingleton<IFileProvider>(
     new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 builder.Services.AddCommonServiceExtension(typeof(FileAssembly));
 builder.Services.AddVersioningExtension();
+builder.Services.AddAuthenticationAuthorizationExtension(builder.Configuration);
 
 var app = builder.Build();
 app.AddFileGroupEndpointExtension(app.AddVersionSetExtension());
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseStaticFiles();
 // Configure the HTTP request pipeline.
