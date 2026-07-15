@@ -15,7 +15,7 @@ public static class CommonServiceExtensions
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining(assembly);
 
-        services.AddScoped<IIdentityService, IdentityServiceStub>();
+        services.AddScoped<IIdentityService, IdentityService>();
 
         services.AddAutoMapper(_ => { }, assembly);
 
