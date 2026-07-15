@@ -15,6 +15,7 @@ builder.Services.AddOptionsExtension();
 builder.Services.AddDatabaseServiceExtension();
 builder.Services.AddCommonServiceExtension(typeof(CatalogAssembly));
 builder.Services.AddVersioningExtension();
+builder.Services.AddAuthenticationAuthorizationExtension(builder.Configuration);
 
 var app = builder.Build();
 
@@ -24,6 +25,8 @@ app.AddSeedDataExtension().ContinueWith(x =>
 });
 app.AddCategoryGroupEndpointExtension(app.AddVersionSetExtension());
 app.AddCourseGroupEndpointExtension(app.AddVersionSetExtension());
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
