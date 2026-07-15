@@ -12,6 +12,7 @@ public static class DiscountEndpointExtensions
             .WithTags("Discounts")
             .WithApiVersionSet(apiVersionSet)
             .CreateDiscountGroupItemEndpoint()
-            .GetDiscountByCouponCodeGroupItemEndpoint();
+            .GetDiscountByCouponCodeGroupItemEndpoint()
+            .RequireAuthorization();
     }
 }

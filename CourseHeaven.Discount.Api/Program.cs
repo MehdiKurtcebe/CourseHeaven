@@ -14,10 +14,13 @@ builder.Services.AddOptionsExtension();
 builder.Services.AddDatabaseServiceExtension();
 builder.Services.AddCommonServiceExtension(typeof(DiscountAssembly));
 builder.Services.AddVersioningExtension();
+builder.Services.AddAuthenticationAuthorizationExtension(builder.Configuration);
 
 var app = builder.Build();
 
 app.AddDiscountGroupEndpointExtension(app.AddVersionSetExtension());
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
