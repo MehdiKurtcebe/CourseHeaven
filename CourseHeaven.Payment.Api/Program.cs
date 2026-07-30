@@ -1,3 +1,4 @@
+using CourseHeaven.Bus;
 using CourseHeaven.Payment.Api;
 using CourseHeaven.Payment.Api.Features.Payments;
 using CourseHeaven.Payment.Api.Repositories;
@@ -13,6 +14,7 @@ string[] versions = ["v1"];
 foreach (var version in versions) builder.Services.AddOpenApi(version);
 builder.Services.AddDbContext<AppDbContext>(options => { options.UseInMemoryDatabase("payment-in-memory-db"); });
 builder.Services.AddCommonServiceExtension(typeof(PaymentAssembly));
+builder.Services.AddMassTransitExtension(builder.Configuration);
 builder.Services.AddVersioningExtension();
 builder.Services.AddAuthenticationAuthorizationExtension(builder.Configuration);
 
