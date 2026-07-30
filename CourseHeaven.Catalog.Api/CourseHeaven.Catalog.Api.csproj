@@ -10,11 +10,13 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10"/>
+        <PackageReference Include="Microsoft.OpenApi" Version="2.11.0"/>
         <PackageReference Include="MongoDB.EntityFrameworkCore" Version="10.0.2"/>
         <PackageReference Include="Scalar.AspNetCore" Version="2.16.11"/>
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\CourseHeaven.Bus\CourseHeaven.Bus.csproj"/>
         <ProjectReference Include="..\CourseHeaven.Shared\CourseHeaven.Shared.csproj"/>
     </ItemGroup>
 

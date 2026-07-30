@@ -1,3 +1,4 @@
+using CourseHeaven.Bus;
 using CourseHeaven.Catalog.Api;
 using CourseHeaven.Catalog.Api.Features.Categories;
 using CourseHeaven.Catalog.Api.Features.Courses;
@@ -14,6 +15,7 @@ foreach (var version in versions) builder.Services.AddOpenApi(version);
 builder.Services.AddOptionsExtension();
 builder.Services.AddDatabaseServiceExtension();
 builder.Services.AddCommonServiceExtension(typeof(CatalogAssembly));
+builder.Services.AddMassTransitExtension(builder.Configuration);
 builder.Services.AddVersioningExtension();
 builder.Services.AddAuthenticationAuthorizationExtension(builder.Configuration);
 
