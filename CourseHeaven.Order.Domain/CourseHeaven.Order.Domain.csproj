@@ -10,4 +10,8 @@
         <ProjectReference Include="..\CourseHeaven.Shared\CourseHeaven.Shared.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="NewId" Version="4.0.1"/>
+    </ItemGroup>
+
 </Project>

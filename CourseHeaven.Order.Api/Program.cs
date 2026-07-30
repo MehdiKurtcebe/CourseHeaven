@@ -1,3 +1,4 @@
+using CourseHeaven.Bus;
 using CourseHeaven.Order.Api.Endpoints.Orders;
 using CourseHeaven.Order.Application;
 using CourseHeaven.Order.Application.Contracts.Repositories;
@@ -17,6 +18,7 @@ string[] versions = ["v1"];
 foreach (var version in versions) builder.Services.AddOpenApi(version);
 
 builder.Services.AddCommonServiceExtension(typeof(OrderApplicationAssembly));
+builder.Services.AddMassTransitExtension(builder.Configuration);
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"));

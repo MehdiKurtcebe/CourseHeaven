@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\CourseHeaven.Bus\CourseHeaven.Bus.csproj"/>
         <ProjectReference Include="..\CourseHeaven.Order.Domain\CourseHeaven.Order.Domain.csproj"/>
     </ItemGroup>
 
