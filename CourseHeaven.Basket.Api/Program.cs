@@ -1,5 +1,6 @@
 using CourseHeaven.Basket.Api;
 using CourseHeaven.Basket.Api.Features.Baskets;
+using CourseHeaven.Bus;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 string[] versions = ["v1"];
 foreach (var version in versions) builder.Services.AddOpenApi(version);
 builder.Services.AddCommonServiceExtension(typeof(BasketAssembly));
+builder.Services.AddMassTransitExtension(builder.Configuration);
 builder.Services.AddScoped<BasketService>();
 builder.Services.AddVersioningExtension();
 builder.Services.AddStackExchangeRedisCache(options =>
