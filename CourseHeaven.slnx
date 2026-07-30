@@ -35,6 +35,7 @@
         <Project Path="CourseHeaven.Payment.Api/CourseHeaven.Payment.Api.csproj"/>
     </Folder>
     <Folder Name="/src/shared/">
+        <Project Path="CourseHeaven.Bus/CourseHeaven.Bus.csproj"/>
         <Project Path="CourseHeaven.Shared/CourseHeaven.Shared.csproj"/>
     </Folder>
 </Solution>

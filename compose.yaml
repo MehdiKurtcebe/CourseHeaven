@@ -84,17 +84,29 @@
     depends_on:
       - postgres.db.keycloak
   postgres.db.keycloak:
-      container_name: postgres.db.keycloak.container
-      image: postgres:18.4
-      restart: always
-      ports:
-        - "54320:5432"
-      environment:
-        POSTGRES_DB: ${POSTGRES_DB}
-        POSTGRES_USER: ${POSTGRES_USER}
-        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      volumes:
-        - postgres.db.keycloak.volume:/var/lib/postgresql
+    container_name: postgres.db.keycloak.container
+    image: postgres:18.4
+    restart: always
+    ports:
+      - "54320:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres.db.keycloak.volume:/var/lib/postgresql
+  rabbitmq.bus:
+    container_name: rabbitmq.bus.container
+    image: rabbitmq:4.3-management
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASSWORD}
+    volumes:
+      - rabbitmq.bus.volume:/var/lib/rabbitmq
 
 volumes:
   mongo.db.catalog.volume:
@@ -102,3 +114,4 @@ volumes:
   mongo.db.discount.volume:
   sqlserver.db.order.volume:
   postgres.db.keycloak.volume:
+  rabbitmq.bus.volume:
