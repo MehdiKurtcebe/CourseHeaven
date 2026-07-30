@@ -1,3 +1,4 @@
+using CourseHeaven.Bus;
 using CourseHeaven.File.Api;
 using CourseHeaven.File.Api.Features.File;
 using CourseHeaven.Shared.Extensions;
@@ -19,6 +20,7 @@ foreach (var version in versions) builder.Services.AddOpenApi(version);
 builder.Services.AddSingleton<IFileProvider>(
     new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 builder.Services.AddCommonServiceExtension(typeof(FileAssembly));
+builder.Services.AddMassTransitExtension(builder.Configuration);
 builder.Services.AddVersioningExtension();
 builder.Services.AddAuthenticationAuthorizationExtension(builder.Configuration);
 
