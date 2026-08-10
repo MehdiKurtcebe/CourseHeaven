@@ -18,6 +18,7 @@ public static class BasketEndpointExtensions
             .DeleteBasketItemGroupItemEndpoint()
             .GetBasketGroupItemEndpoint()
             .ApplyDiscountCouponGroupItemEndpoint()
-            .RemoveDiscountCouponGroupItemEndpoint();
+            .RemoveDiscountCouponGroupItemEndpoint()
+            .RequireAuthorization("Password");
     }
 }

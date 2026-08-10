@@ -10,6 +10,11 @@ public class BasketService(IIdentityService identityService, IDistributedCache d
         return string.Format(BasketConst.BasketCacheKey, identityService.UserId);
     }
 
+    private string GetCacheKey(Guid userId)
+    {
+        return string.Format(BasketConst.BasketCacheKey, userId);
+    }
+
     public Task<string?> GetBasketFromCacheAsync(CancellationToken cancellationToken)
     {
         return distributedCache.GetStringAsync(GetCacheKey(), cancellationToken);
@@ -19,5 +24,10 @@ public class BasketService(IIdentityService identityService, IDistributedCache d
     {
         var basketJson = JsonSerializer.Serialize(basket);
         await distributedCache.SetStringAsync(GetCacheKey(), basketJson, cancellationToken);
+    }
+
+    public async Task DeleteBasketAsync(Guid userId)
+    {
+        await distributedCache.RemoveAsync(GetCacheKey(userId));
     }
 }
