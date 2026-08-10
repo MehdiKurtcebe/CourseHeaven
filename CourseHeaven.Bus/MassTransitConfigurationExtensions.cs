@@ -6,23 +6,50 @@ namespace CourseHeaven.Bus;
 
 public static class MassTransitConfigurationExtensions
 {
-    public static IServiceCollection AddMassTransitExtension(this IServiceCollection services,
-        IConfiguration configuration)
+    extension(IServiceCollection services)
     {
-        var busOptions = (configuration.GetSection(nameof(BusOptions)).Get<BusOptions>())!;
-
-        services.AddMassTransit(configurator =>
+        public IServiceCollection AddMassTransitExtension(IConfiguration configuration)
         {
-            configurator.UsingRabbitMq((_, cfg) =>
+            var busOptions = configuration.GetSection(nameof(BusOptions)).Get<BusOptions>()!;
+
+            services.AddMassTransit(configurator =>
             {
-                cfg.Host(new Uri($"rabbitmq://{busOptions.Address}:{busOptions.Port}"), h =>
+                configurator.UsingRabbitMq((ctx, cfg) =>
                 {
-                    h.Username(busOptions.Username);
-                    h.Password(busOptions.Password);
+                    cfg.Host(new Uri($"rabbitmq://{busOptions.Address}:{busOptions.Port}"), h =>
+                    {
+                        h.Username(busOptions.Username);
+                        h.Password(busOptions.Password);
+                    });
+
+                    cfg.ConfigureEndpoints(ctx);
                 });
             });
-        });
 
-        return services;
+            return services;
+        }
+
+        public IServiceCollection AddMassTransitExtension(IConfiguration configuration, Type consumer, string queueName)
+        {
+            var busOptions = configuration.GetSection(nameof(BusOptions)).Get<BusOptions>()!;
+
+            services.AddMassTransit(configurator =>
+            {
+                configurator.AddConsumer(consumer);
+
+                configurator.UsingRabbitMq((ctx, cfg) =>
+                {
+                    cfg.Host(new Uri($"rabbitmq://{busOptions.Address}:{busOptions.Port}"), h =>
+                    {
+                        h.Username(busOptions.Username);
+                        h.Password(busOptions.Password);
+                    });
+
+                    cfg.ReceiveEndpoint(queueName, e => { e.ConfigureConsumer(ctx, consumer); });
+                });
+            });
+
+            return services;
+        }
     }
 }
