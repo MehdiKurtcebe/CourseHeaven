@@ -1,5 +1,6 @@
 using CourseHeaven.Bus;
 using CourseHeaven.Catalog.Api;
+using CourseHeaven.Catalog.Api.Consumers;
 using CourseHeaven.Catalog.Api.Features.Categories;
 using CourseHeaven.Catalog.Api.Features.Courses;
 using CourseHeaven.Catalog.Api.Options;
@@ -15,7 +16,8 @@ foreach (var version in versions) builder.Services.AddOpenApi(version);
 builder.Services.AddOptionsExtension();
 builder.Services.AddDatabaseServiceExtension();
 builder.Services.AddCommonServiceExtension(typeof(CatalogAssembly));
-builder.Services.AddMassTransitExtension(builder.Configuration);
+builder.Services.AddMassTransitExtension(builder.Configuration, typeof(CourseImageUploadedEventConsumer),
+    "catalog-microservice.course-picture-uploaded.queue");
 builder.Services.AddVersioningExtension();
 builder.Services.AddAuthenticationAuthorizationExtension(builder.Configuration);
 
