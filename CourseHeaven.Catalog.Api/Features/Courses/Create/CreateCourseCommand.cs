@@ -4,5 +4,5 @@ public record CreateCourseCommand(
     string Name,
     string Description,
     decimal Price,
-    string? ImageUrl,
+    IFormFile? Image,
     Guid CategoryId) : IRequestByServiceResult<CreateCourseResponse>;

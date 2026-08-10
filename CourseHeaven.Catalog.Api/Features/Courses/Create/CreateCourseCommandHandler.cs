@@ -1,8 +1,9 @@
+using CourseHeaven.Bus.Commands;
 using CourseHeaven.Catalog.Api.Repositories;
 
 namespace CourseHeaven.Catalog.Api.Features.Courses.Create;
 
-public class CreateCourseCommandHandler(AppDbContext context, IMapper mapper)
+public class CreateCourseCommandHandler(AppDbContext context, IMapper mapper, IPublishEndpoint publishEndpoint)
     : IRequestHandler<CreateCourseCommand, ServiceResult<CreateCourseResponse>>
 {
     public async Task<ServiceResult<CreateCourseResponse>> Handle(CreateCourseCommand request,
@@ -20,6 +21,18 @@ public class CreateCourseCommandHandler(AppDbContext context, IMapper mapper)
 
         context.Courses.Add(course);
         await context.SaveChangesAsync(cancellationToken);
+
+        if (request.Image is not null)
+        {
+            using var stream = new MemoryStream();
+            await request.Image.CopyToAsync(stream, cancellationToken);
+
+            var imageBytes = stream.ToArray();
+
+            var uploadCourseImageCommand = new UploadCourseImageCommand(course.Id, imageBytes, request.Image.FileName);
+
+            await publishEndpoint.Publish(uploadCourseImageCommand, cancellationToken);
+        }
 
         return ServiceResult<CreateCourseResponse>.SuccessAsCreated(new CreateCourseResponse(course.Id),
             $"/api/courses/{course.Id}");
