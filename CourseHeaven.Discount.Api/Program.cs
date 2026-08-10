@@ -1,5 +1,6 @@
 using CourseHeaven.Bus;
 using CourseHeaven.Discount.Api;
+using CourseHeaven.Discount.Api.Consumers;
 using CourseHeaven.Discount.Api.Features.Discounts;
 using CourseHeaven.Discount.Api.Options;
 using CourseHeaven.Discount.Api.Repositories;
@@ -14,7 +15,8 @@ foreach (var version in versions) builder.Services.AddOpenApi(version);
 builder.Services.AddOptionsExtension();
 builder.Services.AddDatabaseServiceExtension();
 builder.Services.AddCommonServiceExtension(typeof(DiscountAssembly));
-builder.Services.AddMassTransitExtension(builder.Configuration);
+builder.Services.AddMassTransitExtension(builder.Configuration, typeof(OrderCreatedEventConsumer),
+    "discount-microservice.order-created.queue");
 builder.Services.AddVersioningExtension();
 builder.Services.AddAuthenticationAuthorizationExtension(builder.Configuration);
 
