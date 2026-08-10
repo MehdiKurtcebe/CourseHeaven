@@ -1,5 +1,6 @@
 using CourseHeaven.Bus;
 using CourseHeaven.File.Api;
+using CourseHeaven.File.Api.Consumers;
 using CourseHeaven.File.Api.Features.File;
 using CourseHeaven.Shared.Extensions;
 using Microsoft.Extensions.FileProviders;
@@ -20,7 +21,8 @@ foreach (var version in versions) builder.Services.AddOpenApi(version);
 builder.Services.AddSingleton<IFileProvider>(
     new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
 builder.Services.AddCommonServiceExtension(typeof(FileAssembly));
-builder.Services.AddMassTransitExtension(builder.Configuration);
+builder.Services.AddMassTransitExtension(builder.Configuration, typeof(UploadCourseImageCommandConsumer),
+    "file-microservice.upload-course-picture-command.queue");
 builder.Services.AddVersioningExtension();
 builder.Services.AddAuthenticationAuthorizationExtension(builder.Configuration);
 
