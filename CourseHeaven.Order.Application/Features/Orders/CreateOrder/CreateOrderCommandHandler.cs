@@ -1,4 +1,6 @@
-﻿using CourseHeaven.Bus.Events;
+﻿using System.Net;
+using CourseHeaven.Bus.Events;
+using CourseHeaven.Order.Application.Contracts.Refit.PaymentService;
 using CourseHeaven.Order.Application.Contracts.Repositories;
 using CourseHeaven.Order.Application.Contracts.UnitOfWork;
 using CourseHeaven.Shared;
@@ -12,7 +14,8 @@ public class CreateOrderCommandHandler(
     IOrderRepository orderRepository,
     IIdentityService identityService,
     IUnitOfWork unitOfWork,
-    IPublishEndpoint publishEndpoint) : IRequestHandler<CreateOrderCommand, ServiceResult>
+    IPublishEndpoint publishEndpoint,
+    IPaymentService paymentService) : IRequestHandler<CreateOrderCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
@@ -29,9 +32,14 @@ public class CreateOrderCommandHandler(
         orderRepository.Add(order);
         await unitOfWork.CommitAsync(cancellationToken);
 
-        var paymentId = Guid.Empty;
-        // TODO: Payment process
-        order.SetStatusToPaid(paymentId);
+        var paymentRequest = new CreatePaymentRequest(order.OrderCode, request.PaymentInfo.CardNumber,
+            request.PaymentInfo.CardHolderName, request.PaymentInfo.Expiration, request.PaymentInfo.Cvc,
+            order.TotalPrice);
+        var paymentResponse = await paymentService.CreatePaymentAsync(paymentRequest, cancellationToken);
+        if (!paymentResponse.Status)
+            return ServiceResult.Error(paymentResponse.ErrorMessage!, HttpStatusCode.InternalServerError);
+
+        order.SetStatusToPaid(paymentResponse.PaymentId!.Value);
 
         orderRepository.Update(order);
         await unitOfWork.CommitAsync(cancellationToken);

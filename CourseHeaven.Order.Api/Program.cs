@@ -1,6 +1,8 @@
 using CourseHeaven.Bus;
 using CourseHeaven.Order.Api.Endpoints.Orders;
 using CourseHeaven.Order.Application;
+using CourseHeaven.Order.Application.BackgroundServices;
+using CourseHeaven.Order.Application.Contracts.Refit;
 using CourseHeaven.Order.Application.Contracts.Repositories;
 using CourseHeaven.Order.Application.Contracts.UnitOfWork;
 using CourseHeaven.Order.Persistence;
@@ -28,6 +30,8 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddVersioningExtension();
 builder.Services.AddAuthenticationAuthorizationExtension(builder.Configuration);
+builder.Services.AddRefitConfigurationExtension(builder.Configuration);
+builder.Services.AddHostedService<CheckOrderPaymentStatusBackgroundService>();
 
 var app = builder.Build();
 
