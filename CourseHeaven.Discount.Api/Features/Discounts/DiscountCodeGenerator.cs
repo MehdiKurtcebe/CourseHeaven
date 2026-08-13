@@ -2,7 +2,7 @@
 
 public class DiscountCodeGenerator
 {
-    private static readonly Random Rand = new Random();
+    private static readonly Random Rand = new();
 
     public static string GenerateDiscountCode(int length = 8)
     {

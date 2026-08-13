@@ -13,16 +13,16 @@ public class OrderCreatedEventConsumer(IServiceProvider serviceProvider) : ICons
         var appDbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
         // TODO: Review this logic later
-        var discount = new Features.Discounts.Discount()
+        var discount = new Features.Discounts.Discount
         {
             Id = NewId.NextSequentialGuid(),
             UserId = context.Message.UserId,
             DiscountRate = 0.1m,
             CouponCode = DiscountCodeGenerator.GenerateDiscountCode(10),
             CreatedAt = DateTimeOffset.UtcNow,
-            ExpireAt = DateTimeOffset.UtcNow.AddMonths(1),
+            ExpireAt = DateTimeOffset.UtcNow.AddMonths(1)
         };
-        
+
         await appDbContext.Discounts.AddAsync(discount);
         await appDbContext.SaveChangesAsync();
     }
