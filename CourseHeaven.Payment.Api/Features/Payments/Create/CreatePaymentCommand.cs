@@ -8,4 +8,4 @@ public record CreatePaymentCommand(
     string CardHolderName,
     string CardExpirationDate,
     string CardSecurityCode,
-    decimal Amount) : IRequestByServiceResult<Guid>;
+    decimal Amount) : IRequestByServiceResult<CreatePaymentResponse>;

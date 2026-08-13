@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning.Builder;
 using CourseHeaven.Payment.Api.Features.Payments.Create;
 using CourseHeaven.Payment.Api.Features.Payments.GetAllByUserId;
+using CourseHeaven.Payment.Api.Features.Payments.GetStatus;
 
 namespace CourseHeaven.Payment.Api.Features.Payments;
 
@@ -12,6 +13,7 @@ public static class PaymentEndpointExtensions
             .WithTags("Payments")
             .WithApiVersionSet(apiVersionSet)
             .CreatePaymentGroupItemEndpoint()
-            .GetAllPaymentsByUserIdGroupItemEndpoint();
+            .GetAllPaymentsByUserIdGroupItemEndpoint()
+            .GetPaymentStatusGroupItemEndpoint();
     }
 }
