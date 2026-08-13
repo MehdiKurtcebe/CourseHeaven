@@ -40,9 +40,7 @@ public static class AuthExtensions
                 ValidateAudience = true,
                 ValidateIssuerSigningKey = true,
                 ValidateLifetime = true,
-                ValidateIssuer = true,
-                RoleClaimType = "roles",
-                NameClaimType = "preferred_username"
+                ValidateIssuer = true
             };
         });
 
