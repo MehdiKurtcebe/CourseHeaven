@@ -38,4 +38,7 @@
         <Project Path="CourseHeaven.Bus/CourseHeaven.Bus.csproj"/>
         <Project Path="CourseHeaven.Shared/CourseHeaven.Shared.csproj"/>
     </Folder>
+    <Folder Name="/src/ui/">
+        <Project Path="CourseHeaven.Web/CourseHeaven.Web.csproj"/>
+    </Folder>
 </Solution>
