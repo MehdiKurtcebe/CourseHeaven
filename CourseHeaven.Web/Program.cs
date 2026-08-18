@@ -1,8 +1,12 @@
+using CourseHeaven.Web.DelegateHandlers;
 using CourseHeaven.Web.Extensions;
+using CourseHeaven.Web.Options;
 using CourseHeaven.Web.Pages.Auth.SignIn;
 using CourseHeaven.Web.Pages.Auth.SignUp;
 using CourseHeaven.Web.Services;
+using CourseHeaven.Web.Services.Refit;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +16,15 @@ builder.Services.AddOptionsExtension();
 
 builder.Services.AddHttpClient<SignUpService>();
 builder.Services.AddHttpClient<SignInService>();
-builder.Services.AddSingleton<TokenService>();
+builder.Services.AddHttpClient<TokenService>();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddRefitClient<ICatalogRefitService>().ConfigureHttpClient(client =>
+    {
+        var gatewayOptions = builder.Configuration.GetSection(nameof(GatewayOptions)).Get<GatewayOptions>();
+        client.BaseAddress = new Uri(gatewayOptions!.BaseAddress);
+    }).AddHttpMessageHandler<AuthenticatedHttpClientHandler>()
+    .AddHttpMessageHandler<ClientAuthenticatedHttpClientHandler>();
 
 builder.Services.AddAuthentication(options =>
     {

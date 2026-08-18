@@ -11,7 +11,11 @@ public static class OptionsExtensions
             .ValidateOnStart();
 
         services.AddSingleton<IdentityOptions>(sp => sp.GetRequiredService<IOptions<IdentityOptions>>().Value);
-        
+
+        services.AddOptions<GatewayOptions>().BindConfiguration(nameof(GatewayOptions)).ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        services.AddSingleton<GatewayOptions>(sp => sp.GetRequiredService<IOptions<GatewayOptions>>().Value);
         return services;
     }
 }
