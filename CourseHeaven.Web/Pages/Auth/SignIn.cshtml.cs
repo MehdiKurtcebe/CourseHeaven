@@ -1,4 +1,6 @@
 ﻿using CourseHeaven.Web.Pages.Auth.SignIn;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,11 +9,11 @@ namespace CourseHeaven.Web.Pages.Auth;
 public class SignInModel(SignInService signInService) : PageModel
 {
     [BindProperty] public required SignInViewModel SignInViewModel { get; set; } = SignInViewModel.Empty;
-    
+
     public void OnGet()
     {
     }
-    
+
     public async Task<IActionResult> OnPostAsync(CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
@@ -25,6 +27,12 @@ public class SignInModel(SignInService signInService) : PageModel
             return Page();
         }
 
+        return RedirectToPage("/Index");
+    }
+
+    public async Task<IActionResult> OnGetSignOutAsync()
+    {
+        await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToPage("/Index");
     }
 }
