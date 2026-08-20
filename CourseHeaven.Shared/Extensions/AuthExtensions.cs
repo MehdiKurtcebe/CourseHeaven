@@ -26,8 +26,8 @@ public static class AuthExtensions
                 ValidateIssuerSigningKey = true,
                 ValidateLifetime = true,
                 ValidateIssuer = true,
-                RoleClaimType = "roles",
-                NameClaimType = "preferred_username"
+                RoleClaimType = ClaimTypes.Role,
+                NameClaimType = ClaimTypes.NameIdentifier
             };
         }).AddJwtBearer("ClientCredentialScheme", options =>
         {
@@ -45,6 +45,13 @@ public static class AuthExtensions
         });
 
         services.AddAuthorizationBuilder()
+            .AddPolicy("InstructorPolicy", policy =>
+            {
+                policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                policy.RequireAuthenticatedUser();
+                policy.RequireClaim(ClaimTypes.Email);
+                policy.RequireClaim(ClaimTypes.Role, "instructor");
+            })
             .AddPolicy("Password", policy =>
             {
                 policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
@@ -55,7 +62,6 @@ public static class AuthExtensions
             {
                 policy.AuthenticationSchemes.Add("ClientCredentialScheme");
                 policy.RequireAuthenticatedUser();
-                policy.RequireClaim("client_id");
             });
 
         return services;
