@@ -7,28 +7,34 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CourseHeaven.Web.Pages.Auth.SignIn;
 
-public class SignInService(IHttpContextAccessor contextAccessor, TokenService tokenService, IdentityOptions identityOptions, HttpClient client, ILogger<SignInService> logger)
+public class SignInService(
+    IHttpContextAccessor contextAccessor,
+    TokenService tokenService,
+    IdentityOptions identityOptions,
+    HttpClient client,
+    ILogger<SignInService> logger)
 {
     public async Task<ServiceResult> AuthenticateAsync(SignInViewModel model, CancellationToken cancellationToken)
     {
         var tokenResponse = await GetAccessTokenAsync(model, cancellationToken);
         if (tokenResponse.IsError)
             return ServiceResult.Error(tokenResponse.Error!, tokenResponse.ErrorDescription!);
-        
+
         var userClaims = tokenService.ExtractClaim(tokenResponse.AccessToken!);
-        var claimIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+        var claimIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme,
+            ClaimTypes.Name, ClaimTypes.Role);
         var claimsPrincipal = new ClaimsPrincipal(claimIdentity);
         var authenticationProperties = tokenService.CreateAuthenticationProperties(tokenResponse);
-        
+
         await contextAccessor.HttpContext!.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
             claimsPrincipal, authenticationProperties);
-            
+
         return ServiceResult.Success();
     }
 
     private async Task<TokenResponse> GetAccessTokenAsync(SignInViewModel model, CancellationToken cancellationToken)
     {
-        var discoveryRequest = new DiscoveryDocumentRequest()
+        var discoveryRequest = new DiscoveryDocumentRequest
         {
             Address = identityOptions.Address,
             Policy = { RequireHttps = false }
@@ -45,7 +51,7 @@ public class SignInService(IHttpContextAccessor contextAccessor, TokenService to
             ClientId = identityOptions.Web.ClientId,
             ClientSecret = identityOptions.Web.ClientSecret,
             UserName = model.Email,
-            Password = model.Password,
+            Password = model.Password
         }, cancellationToken);
 
         return tokenResponse;

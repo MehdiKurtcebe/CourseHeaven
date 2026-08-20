@@ -6,15 +6,15 @@ namespace CourseHeaven.Web.Services;
 public class ServiceResult
 {
     public ProblemDetails? Fail { get; set; }
-    
+
     [JsonIgnore] public bool IsSuccess => Fail is null;
     [JsonIgnore] public bool IsFail => !IsSuccess;
-    
+
     public static ServiceResult Success()
     {
         return new ServiceResult();
     }
-    
+
     public static ServiceResult Error(ProblemDetails problemDetails)
     {
         return new ServiceResult
@@ -22,7 +22,7 @@ public class ServiceResult
             Fail = problemDetails
         };
     }
-    
+
     public static ServiceResult Error(string title, string description)
     {
         return new ServiceResult
@@ -30,18 +30,18 @@ public class ServiceResult
             Fail = new ProblemDetails
             {
                 Title = title,
-                Detail = description,
+                Detail = description
             }
         };
     }
-    
+
     public static ServiceResult Error(string title)
     {
         return new ServiceResult
         {
             Fail = new ProblemDetails
             {
-                Title = title,
+                Title = title
             }
         };
     }
@@ -50,7 +50,7 @@ public class ServiceResult
 public class ServiceResult<T> : ServiceResult
 {
     public T? Data { get; set; }
-    
+
     public static ServiceResult<T> Success(T data)
     {
         return new ServiceResult<T>
@@ -58,7 +58,7 @@ public class ServiceResult<T> : ServiceResult
             Data = data
         };
     }
-    
+
     public new static ServiceResult<T> Error(ProblemDetails problemDetails)
     {
         return new ServiceResult<T>
@@ -66,7 +66,7 @@ public class ServiceResult<T> : ServiceResult
             Fail = problemDetails
         };
     }
-    
+
     public new static ServiceResult<T> Error(string title, string description)
     {
         return new ServiceResult<T>
@@ -74,18 +74,18 @@ public class ServiceResult<T> : ServiceResult
             Fail = new ProblemDetails
             {
                 Title = title,
-                Detail = description,
+                Detail = description
             }
         };
     }
-    
+
     public new static ServiceResult<T> Error(string title)
     {
         return new ServiceResult<T>
         {
             Fail = new ProblemDetails
             {
-                Title = title,
+                Title = title
             }
         };
     }
