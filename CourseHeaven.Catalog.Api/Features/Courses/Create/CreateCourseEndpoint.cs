@@ -15,7 +15,8 @@ public static class CreateCourseEndpoint
             .Produces<CreateCourseResponse>(StatusCodes.Status201Created)
             .Produces<ProblemDetails>(StatusCodes.Status404NotFound)
             .AddEndpointFilter<ValidationFilter<CreateCourseCommand>>()
-            .DisableAntiforgery();
+            .DisableAntiforgery()
+            .RequireAuthorization(policyNames: "InstructorPolicy");
 
         return group;
     }

@@ -14,7 +14,8 @@ public static class UpdateCourseEndpoint
             .MapToApiVersion(1, 0)
             .Produces(StatusCodes.Status204NoContent)
             .Produces<ProblemDetails>(StatusCodes.Status404NotFound)
-            .AddEndpointFilter<ValidationFilter<UpdateCourseCommand>>();
+            .AddEndpointFilter<ValidationFilter<UpdateCourseCommand>>()
+            .RequireAuthorization(policyNames: "InstructorPolicy");
 
         return group;
     }

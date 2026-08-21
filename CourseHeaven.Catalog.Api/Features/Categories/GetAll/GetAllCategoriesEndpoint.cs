@@ -26,7 +26,8 @@ public static class GetAllCategoriesEndpoint
                 async (IMediator mediator) => (await mediator.Send(new GetAllCategoriesQuery())).ToGenericResult())
             .WithName("GetAllCategories")
             .MapToApiVersion(1, 0)
-            .Produces<List<CategoryDto>>();
+            .Produces<List<CategoryDto>>()
+            .RequireAuthorization("ClientCredential");
 
         return group;
     }
