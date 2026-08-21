@@ -18,11 +18,15 @@ builder.Services.AddHttpClient<SignUpService>();
 builder.Services.AddHttpClient<SignInService>();
 builder.Services.AddHttpClient<TokenService>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<CatalogService>();
+builder.Services.AddScoped<AuthenticatedHttpClientHandler>();
+builder.Services.AddScoped<ClientAuthenticatedHttpClientHandler>();
 
 builder.Services.AddRefitClient<ICatalogRefitService>().ConfigureHttpClient(client =>
     {
-        var gatewayOptions = builder.Configuration.GetSection(nameof(GatewayOptions)).Get<GatewayOptions>();
-        client.BaseAddress = new Uri(gatewayOptions!.BaseAddress);
+        var microserviceOptions =
+            builder.Configuration.GetSection(nameof(MicroserviceOptions)).Get<MicroserviceOptions>();
+        client.BaseAddress = new Uri(microserviceOptions!.Catalog.BaseAddress);
     }).AddHttpMessageHandler<AuthenticatedHttpClientHandler>()
     .AddHttpMessageHandler<ClientAuthenticatedHttpClientHandler>();
 

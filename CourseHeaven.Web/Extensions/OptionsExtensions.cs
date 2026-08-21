@@ -9,13 +9,12 @@ public static class OptionsExtensions
     {
         services.AddOptions<IdentityOptions>().BindConfiguration(nameof(IdentityOptions)).ValidateDataAnnotations()
             .ValidateOnStart();
-
         services.AddSingleton<IdentityOptions>(sp => sp.GetRequiredService<IOptions<IdentityOptions>>().Value);
 
-        services.AddOptions<GatewayOptions>().BindConfiguration(nameof(GatewayOptions)).ValidateDataAnnotations()
-            .ValidateOnStart();
+        services.AddOptions<MicroserviceOptions>().BindConfiguration(nameof(MicroserviceOptions))
+            .ValidateDataAnnotations().ValidateOnStart();
+        services.AddSingleton<MicroserviceOptions>(sp => sp.GetRequiredService<IOptions<MicroserviceOptions>>().Value);
 
-        services.AddSingleton<GatewayOptions>(sp => sp.GetRequiredService<IOptions<GatewayOptions>>().Value);
         return services;
     }
 }
