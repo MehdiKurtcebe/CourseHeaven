@@ -33,7 +33,8 @@ public static class GetAllCoursesByUserIdEndpoint
                     (await mediator.Send(new GetAllCoursesByUserIdQuery(userId))).ToGenericResult())
             .WithName("GetAllCoursesByUserId")
             .MapToApiVersion(1, 0)
-            .Produces<List<CourseDto>>();
+            .Produces<List<CourseDto>>()
+            .RequireAuthorization("InstructorPolicy");
 
         return group;
     }
