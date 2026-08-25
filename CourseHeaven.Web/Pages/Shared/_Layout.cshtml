@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - CourseHeaven.Web</title>
+    <title>@ViewData["Title"] - CourseHeaven</title>
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
@@ -13,7 +14,7 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
-            <a class="navbar-brand" asp-area="" asp-page="/Index">CourseHeaven.Web</a>
+            <a class="navbar-brand" asp-area="" asp-page="/Index">CourseHeaven</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                     aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -38,12 +39,17 @@
                                 @User.Identity.Name
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                @if (User.Claims.Any(c => c is { Type: ClaimTypes.Role, Value: "instructor" }))
+                                {
+                                    <li><a class="dropdown-item" asp-page="/Instructor/Index">Instructor</a></li>
+                                }
                                 <li><a class="dropdown-item" asp-page="/Profile">My Profile</a></li>
                                 <li><a class="dropdown-item" asp-page="/Orders">My Orders</a></li>
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" asp-page="/Auth/SignIn" asp-page-handler="SignOut">Sign
+                                <li>
+                                    <a class="dropdown-item" asp-page="/Auth/SignIn" asp-page-handler="SignOut">Sign
                                         Out</a></li>
                             </ul>
                         </li>
@@ -70,7 +76,7 @@
 
 <footer class="border-top footer text-muted">
     <div class="container">
-        &copy; 2026 - CourseHeaven.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        &copy; 2026 - CourseHeaven - <a asp-area="" asp-page="/Privacy">Privacy</a>
     </div>
 </footer>
 

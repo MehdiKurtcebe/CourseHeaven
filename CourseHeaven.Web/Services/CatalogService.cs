@@ -4,7 +4,10 @@ using Refit;
 
 namespace CourseHeaven.Web.Services;
 
-public class CatalogService(ICatalogRefitService catalogRefitService, ILogger<CatalogService> logger)
+public class CatalogService(
+    ICatalogRefitService catalogRefitService,
+    UserService userService,
+    ILogger<CatalogService> logger)
 {
     public async Task<ServiceResult<List<CategoryViewModel>>> GetCategoriesAsync()
     {
@@ -42,6 +45,44 @@ public class CatalogService(ICatalogRefitService catalogRefitService, ILogger<Ca
         {
             logger.LogError("Error occurred while creating course");
             return ServiceResult.Error("Fail to create course. Please try again later");
+        }
+
+        return ServiceResult.Success();
+    }
+
+    public async Task<ServiceResult<List<CourseViewModel>>> GetCoursesByUserIdAsync()
+    {
+        var course = await catalogRefitService.GetCoursesByUserIdAsync(userService.UserId);
+
+        if (!course.IsSuccessStatusCode)
+        {
+            logger.LogError("Error occurred while fetching courses by user id");
+            return ServiceResult<List<CourseViewModel>>.Error("Fail to retrieve courses. Please try again later");
+        }
+
+        var courses = course.Content!
+            .Select(c => new CourseViewModel(
+                c.Id,
+                c.Name,
+                c.Description,
+                c.Price,
+                c.ImageUrl,
+                c.Category.Name,
+                c.Feature.Duration,
+                c.Feature.Rating
+            ))
+            .ToList();
+
+        return ServiceResult<List<CourseViewModel>>.Success(courses);
+    }
+
+    public async Task<ServiceResult> DeleteAsync(Guid courseId)
+    {
+        var response = await catalogRefitService.DeleteCourseAsync(courseId);
+        if (!response.IsSuccessStatusCode)
+        {
+            logger.LogError("Error occurred while deleting course");
+            return ServiceResult.Error("Fail to delete course. Please try again later");
         }
 
         return ServiceResult.Success();

@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace CourseHeaven.Web.Services;
 
-public class TokenService(HttpClient client, IdentityOptions identityOptions)
+public class TokenService(IHttpClientFactory httpClientFactory, IdentityOptions identityOptions)
 {
     public List<Claim> ExtractClaim(string token)
     {
@@ -55,6 +55,7 @@ public class TokenService(HttpClient client, IdentityOptions identityOptions)
             Policy = { RequireHttps = false }
         };
 
+        var client = httpClientFactory.CreateClient("GetTokensByRefreshTokenAsync");
         client.BaseAddress = new Uri(identityOptions.Address);
         var discoveryResponse = await client.GetDiscoveryDocumentAsync(discoveryDocument, cancellationToken);
         if (discoveryResponse.IsError)
@@ -79,6 +80,7 @@ public class TokenService(HttpClient client, IdentityOptions identityOptions)
             Policy = { RequireHttps = false }
         };
 
+        var client = httpClientFactory.CreateClient("GetClientAccessTokenAsync");
         client.BaseAddress = new Uri(identityOptions.Address);
         var discoveryResponse = await client.GetDiscoveryDocumentAsync(discoveryRequest, cancellationToken);
         if (discoveryResponse.IsError)
