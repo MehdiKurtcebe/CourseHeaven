@@ -1,9 +1,14 @@
 using CourseHeaven.Bus.Commands;
 using CourseHeaven.Catalog.Api.Repositories;
+using CourseHeaven.Shared.Services;
 
 namespace CourseHeaven.Catalog.Api.Features.Courses.Create;
 
-public class CreateCourseCommandHandler(AppDbContext context, IMapper mapper, IPublishEndpoint publishEndpoint)
+public class CreateCourseCommandHandler(
+    AppDbContext context,
+    IMapper mapper,
+    IPublishEndpoint publishEndpoint,
+    IIdentityService identityService)
     : IRequestHandler<CreateCourseCommand, ServiceResult<CreateCourseResponse>>
 {
     public async Task<ServiceResult<CreateCourseResponse>> Handle(CreateCourseCommand request,
@@ -17,6 +22,7 @@ public class CreateCourseCommandHandler(AppDbContext context, IMapper mapper, IP
         var course = mapper.Map<Course>(request);
         course.Id = NewId.NextSequentialGuid();
         course.CreatedAt = DateTime.UtcNow;
+        course.UserId = identityService.UserId;
         course.Feature = new Feature { EducatorFullName = "" }; // TODO: Handle feature properly in the future
 
         context.Courses.Add(course);
