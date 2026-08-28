@@ -29,6 +29,9 @@ public static class AuthExtensions
                 RoleClaimType = ClaimTypes.Role,
                 NameClaimType = ClaimTypes.NameIdentifier
             };
+
+            options.AutomaticRefreshInterval = TimeSpan.FromHours(24);
+            options.RefreshInterval = TimeSpan.FromSeconds(30);
         }).AddJwtBearer("ClientCredentialScheme", options =>
         {
             options.Authority = identityOptions.Address;
