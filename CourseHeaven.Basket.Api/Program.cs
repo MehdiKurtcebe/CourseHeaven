@@ -23,6 +23,8 @@ builder.Services.AddAuthenticationAuthorizationExtension(builder.Configuration);
 
 var app = builder.Build();
 
+app.UseExceptionHandler(x => { });
+
 app.AddBasketGroupEndpointExtension(app.AddVersionSetExtension());
 app.UseAuthentication();
 app.UseAuthorization();
