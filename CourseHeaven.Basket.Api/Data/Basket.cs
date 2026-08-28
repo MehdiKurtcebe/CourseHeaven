@@ -30,14 +30,17 @@ public class Basket
         CouponCode = couponCode;
         DiscountRate = discountRate;
 
-        foreach (var basketItem in Items) basketItem.DiscountedPrice = basketItem.CoursePrice * (1 - discountRate);
+        foreach (var basketItem in Items)
+            basketItem.DiscountedPrice = decimal.Ceiling(basketItem.CoursePrice * (1 - discountRate) * 100m) / 100m;
     }
 
     public void ApplyAvailableDiscount()
     {
         if (!IsDiscountApplied) return;
 
-        foreach (var basketItem in Items) basketItem.DiscountedPrice = basketItem.CoursePrice * (1 - DiscountRate);
+        foreach (var basketItem in Items)
+            basketItem.DiscountedPrice =
+                decimal.Ceiling((decimal)(basketItem.CoursePrice * (1 - DiscountRate) * 100m)!) / 100m;
     }
 
     public void ClearDiscount()
