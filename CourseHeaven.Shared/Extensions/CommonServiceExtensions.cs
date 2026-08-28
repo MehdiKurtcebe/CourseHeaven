@@ -1,3 +1,4 @@
+using CourseHeaven.Shared.ExceptionHandlers;
 using CourseHeaven.Shared.Services;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,8 @@ public static class CommonServiceExtensions
         services.AddScoped<IIdentityService, IdentityService>();
 
         services.AddAutoMapper(_ => { }, assembly);
+
+        services.AddExceptionHandler<GlobalExceptionHandler>();
 
         return services;
     }
