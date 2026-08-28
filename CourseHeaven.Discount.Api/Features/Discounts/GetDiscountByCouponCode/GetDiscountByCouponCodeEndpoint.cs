@@ -13,7 +13,8 @@ public static class GetDiscountByCouponCodeEndpoint
             .MapToApiVersion(1, 0)
             .Produces<GetDiscountByCouponCodeQueryResponse>()
             .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
-            .Produces<ProblemDetails>(StatusCodes.Status404NotFound);
+            .Produces<ProblemDetails>(StatusCodes.Status404NotFound)
+            .RequireAuthorization("Password");
 
         return group;
     }

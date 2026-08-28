@@ -14,7 +14,8 @@ public static class CreateDiscountCommandEndpoint
             .MapToApiVersion(1, 0)
             .Produces(StatusCodes.Status204NoContent)
             .Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
-            .AddEndpointFilter<ValidationFilter<CreateDiscountCommand>>();
+            .AddEndpointFilter<ValidationFilter<CreateDiscountCommand>>()
+            .AllowAnonymous();
 
         return group;
     }
