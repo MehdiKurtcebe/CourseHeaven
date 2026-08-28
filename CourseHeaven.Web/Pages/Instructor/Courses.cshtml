@@ -1,5 +1,5 @@
 ﻿@page
-@model CourseHeaven.Web.Pages.Instructor.CoursesModel
+@model CoursesModel
 @{
     Layout = "_Instructor_Layout";
 }
@@ -27,7 +27,7 @@
             <tr>
                 <th scope="row">@index</th>
                 <td>
-                    <course-thumbnail-picture width="50px" class="img-fluid img-thumbnail" src="@course.ImageUrl" />
+                    <course-thumbnail-picture width="50px" class="img-fluid img-thumbnail" src="@course.ImageUrl"/>
                 </td>
                 <td>@course.Name</td>
                 <td>@course.TruncateDescription(100)</td>
@@ -38,7 +38,7 @@
                 <td>
                     <div class="btn-group" role="group">
                         <a asp-page="Update" asp-route-id="@course.Id" class="btn btn-sm btn-primary">Edit</a>
-                        <a asp-page-handler="Delete" asp-route-id="@course.Id" class="btn btn-sm btn-danger">Delete</a>
+                        <a asp-page-handler="Delete" asp-route-courseId="@course.Id" class="btn btn-sm btn-danger">Delete</a>
                     </div>
                 </td>
             </tr>

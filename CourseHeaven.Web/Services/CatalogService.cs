@@ -1,5 +1,6 @@
-﻿using CourseHeaven.Web.Pages.Instructor.ViewModel;
+﻿using CourseHeaven.Web.Extensions;
 using CourseHeaven.Web.Services.Refit;
+using CourseHeaven.Web.ViewModel;
 using Refit;
 
 namespace CourseHeaven.Web.Services;
@@ -50,6 +51,40 @@ public class CatalogService(
         return ServiceResult.Success();
     }
 
+    public async Task<ServiceResult<List<CourseViewModel>>> GetAllCoursesAsync()
+    {
+        var coursesAsResult = await catalogRefitService.GetAllCoursesAsync();
+        if (!coursesAsResult.IsSuccessStatusCode)
+        {
+            logger.LogProblemDetailsExtension(coursesAsResult.Error as ApiException);
+            return ServiceResult<List<CourseViewModel>>.Error(
+                "Failed to retrieve course data. Please try again later.");
+        }
+
+        var courses = coursesAsResult.Content!;
+        var coursesViewModel = courses.Select(c =>
+            new CourseViewModel(c.Id, c.Name, c.Description, c.Price, c.ImageUrl,
+                c.CreatedAt.LocalDateTime.ToLongDateString(),
+                c.Feature.EducatorFullName, c.Category.Name, c.Feature.Duration, c.Feature.Rating)).ToList();
+
+        return ServiceResult<List<CourseViewModel>>.Success(coursesViewModel);
+    }
+
+    public async Task<ServiceResult<CourseViewModel>> GetCourseAsync(Guid courseId)
+    {
+        var response = await catalogRefitService.GetCourseAsync(courseId);
+        if (!response.IsSuccessStatusCode)
+            return ServiceResult<CourseViewModel>.FailFromProblemDetails((response.Error as ApiException)!);
+
+        var course = response.Content!;
+        var courseViewModel = new CourseViewModel(course.Id, course.Name, course.Description, course.Price,
+            course.ImageUrl, course.CreatedAt.LocalDateTime.ToLongDateString(), course.Feature.EducatorFullName,
+            course.Category.Name,
+            course.Feature.Duration, course.Feature.Rating);
+
+        return ServiceResult<CourseViewModel>.Success(courseViewModel);
+    }
+
     public async Task<ServiceResult<List<CourseViewModel>>> GetCoursesByUserIdAsync()
     {
         var course = await catalogRefitService.GetCoursesByUserIdAsync(userService.UserId);
@@ -67,6 +102,8 @@ public class CatalogService(
                 c.Description,
                 c.Price,
                 c.ImageUrl,
+                c.CreatedAt.LocalDateTime.ToLongDateString(),
+                c.Feature.EducatorFullName,
                 c.Category.Name,
                 c.Feature.Duration,
                 c.Feature.Rating

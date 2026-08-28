@@ -1,5 +1,5 @@
-﻿using CourseHeaven.Web.Pages.Instructor.ViewModel;
-using CourseHeaven.Web.Services;
+﻿using CourseHeaven.Web.Services;
+using CourseHeaven.Web.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

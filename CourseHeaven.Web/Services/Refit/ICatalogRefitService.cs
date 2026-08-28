@@ -1,4 +1,4 @@
-﻿using CourseHeaven.Web.Pages.Instructor.Dto;
+﻿using CourseHeaven.Web.Dto;
 using Refit;
 
 namespace CourseHeaven.Web.Services.Refit;
@@ -7,6 +7,12 @@ public interface ICatalogRefitService
 {
     [Get("/api/v1/categories")]
     Task<ApiResponse<List<CategoryDto>>> GetCategoriesAsync();
+
+    [Get("/api/v1/courses")]
+    Task<ApiResponse<List<CourseDto>>> GetAllCoursesAsync();
+
+    [Get("/api/v1/courses/{id}")]
+    Task<ApiResponse<CourseDto>> GetCourseAsync(Guid id);
 
     [Get("/api/v1/courses/user/{userId}")]
     Task<ApiResponse<List<CourseDto>>> GetCoursesByUserIdAsync(Guid userId);

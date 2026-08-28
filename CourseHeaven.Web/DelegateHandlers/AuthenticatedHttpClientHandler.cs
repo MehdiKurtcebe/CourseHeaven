@@ -1,7 +1,9 @@
 ﻿using System.Net;
+using System.Security.Claims;
 using CourseHeaven.Web.Services;
 using Duende.IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 namespace CourseHeaven.Web.DelegateHandlers;
@@ -35,7 +37,13 @@ public class AuthenticatedHttpClientHandler(IHttpContextAccessor httpContextAcce
         if (tokenResponse.IsError)
             throw new UnauthorizedAccessException("Failed to refresh access token.");
 
-        // TODO: Store the new tokens in the authentication properties
+        var userClaims = httpContextAccessor.HttpContext.User.Claims;
+        var claimsIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme,
+            ClaimTypes.Name, ClaimTypes.Role);
+        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+        var authProperties = tokenService.CreateAuthenticationProperties(tokenResponse);
+        await httpContextAccessor.HttpContext!.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+            claimsPrincipal, authProperties);
 
         request.SetBearerToken(tokenResponse.AccessToken!);
         return await base.SendAsync(request, cancellationToken);

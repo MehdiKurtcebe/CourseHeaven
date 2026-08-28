@@ -1,4 +1,4 @@
-﻿namespace CourseHeaven.Web.Pages.Instructor.ViewModel;
+﻿namespace CourseHeaven.Web.ViewModel;
 
 public record CourseViewModel(
     Guid Id,
@@ -6,6 +6,8 @@ public record CourseViewModel(
     string Description,
     decimal Price,
     string? ImageUrl,
+    string CreatedAt,
+    string EducatorFullName,
     string CategoryName,
     int Duration,
     double Rating)

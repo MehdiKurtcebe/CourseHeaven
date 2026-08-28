@@ -1,5 +1,5 @@
-﻿using CourseHeaven.Web.Pages.Instructor.ViewModel;
-using CourseHeaven.Web.Services;
+﻿using CourseHeaven.Web.Services;
+using CourseHeaven.Web.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -8,7 +8,7 @@ namespace CourseHeaven.Web.Pages.Instructor;
 public class CoursesModel(CatalogService catalogService) : PageModel
 {
     public List<CourseViewModel> CourseViewModels { get; set; } = null!;
-    
+
     public async Task OnGetAsync()
     {
         var result = await catalogService.GetCoursesByUserIdAsync();
@@ -27,7 +27,7 @@ public class CoursesModel(CatalogService catalogService) : PageModel
         {
             //TODO: redirect to error page
         }
-        
+
         return RedirectToPage();
     }
 }

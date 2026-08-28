@@ -1,4 +1,4 @@
-﻿namespace CourseHeaven.Web.Pages.Instructor.Dto;
+﻿namespace CourseHeaven.Web.Dto;
 
 public record CourseDto(
     Guid Id,
@@ -6,5 +6,6 @@ public record CourseDto(
     string Description,
     decimal Price,
     string? ImageUrl,
+    DateTimeOffset CreatedAt,
     CategoryDto Category,
     FeatureDto Feature);

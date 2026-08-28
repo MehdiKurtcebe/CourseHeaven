@@ -1,5 +1,7 @@
-﻿using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Refit;
+using ProblemDetails = Microsoft.AspNetCore.Mvc.ProblemDetails;
 
 namespace CourseHeaven.Web.Services;
 
@@ -13,6 +15,26 @@ public class ServiceResult
     public static ServiceResult Success()
     {
         return new ServiceResult();
+    }
+
+    public static ServiceResult FailFromProblemDetails(ApiException exception)
+    {
+        if (string.IsNullOrEmpty(exception.Content))
+            return new ServiceResult
+            {
+                Fail = new ProblemDetails
+                {
+                    Title = exception.Message
+                }
+            };
+
+        return new ServiceResult
+        {
+            Fail = JsonSerializer.Deserialize<ProblemDetails>(exception.Content, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            })
+        };
     }
 
     public static ServiceResult Error(ProblemDetails problemDetails)
@@ -56,6 +78,26 @@ public class ServiceResult<T> : ServiceResult
         return new ServiceResult<T>
         {
             Data = data
+        };
+    }
+
+    public new static ServiceResult<T> FailFromProblemDetails(ApiException exception)
+    {
+        if (string.IsNullOrEmpty(exception.Content))
+            return new ServiceResult<T>
+            {
+                Fail = new ProblemDetails
+                {
+                    Title = exception.Message
+                }
+            };
+
+        return new ServiceResult<T>
+        {
+            Fail = JsonSerializer.Deserialize<ProblemDetails>(exception.Content, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            })
         };
     }
 

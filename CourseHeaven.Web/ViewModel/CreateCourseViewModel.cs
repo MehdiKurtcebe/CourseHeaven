@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace CourseHeaven.Web.Pages.Instructor.ViewModel;
+namespace CourseHeaven.Web.ViewModel;
 
 public record CreateCourseViewModel
 {

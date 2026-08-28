@@ -1,4 +1,4 @@
-﻿namespace CourseHeaven.Web.Pages.Instructor.Dto;
+﻿namespace CourseHeaven.Web.Dto;
 
 public record CreateCourseRequest(
     string Name,

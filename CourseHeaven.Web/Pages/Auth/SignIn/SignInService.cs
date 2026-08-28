@@ -51,7 +51,8 @@ public class SignInService(
             ClientId = identityOptions.Web.ClientId,
             ClientSecret = identityOptions.Web.ClientSecret,
             UserName = model.Email,
-            Password = model.Password
+            Password = model.Password,
+            Scope = "offline_access"
         }, cancellationToken);
 
         return tokenResponse;
