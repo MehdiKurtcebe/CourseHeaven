@@ -8,5 +8,6 @@ public record CourseDto(
     string Description,
     decimal Price,
     string? ImageUrl,
+    DateTimeOffset CreatedAt,
     CategoryDto Category,
     FeatureDto Feature);
