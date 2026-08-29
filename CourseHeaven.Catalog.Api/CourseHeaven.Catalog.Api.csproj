@@ -19,4 +19,10 @@
         <ProjectReference Include="..\CourseHeaven.Shared\CourseHeaven.Shared.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
 </Project>

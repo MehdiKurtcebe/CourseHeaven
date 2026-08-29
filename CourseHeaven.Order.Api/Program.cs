@@ -35,6 +35,13 @@ builder.Services.AddHostedService<CheckOrderPaymentStatusBackgroundService>();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    var dbContext = serviceProvider.GetRequiredService<AppDbContext>();
+    await dbContext.Database.MigrateAsync();
+}
+
 app.AddOrderGroupEndpointExtension(app.AddVersionSetExtension());
 app.UseAuthentication();
 app.UseAuthorization();

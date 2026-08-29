@@ -107,6 +107,54 @@
       RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASSWORD}
     volumes:
       - rabbitmq.bus.volume:/var/lib/rabbitmq
+  
+  courseheaven.basket.api:
+    image: courseheaven.basket.api
+    build:
+      context: .
+      dockerfile: CourseHeaven.Basket.Api/Dockerfile
+
+  courseheaven.catalog.api:
+    image: courseheaven.catalog.api
+    build:
+      context: .
+      dockerfile: CourseHeaven.Catalog.Api/Dockerfile
+
+  courseheaven.discount.api:
+    image: courseheaven.discount.api
+    build:
+      context: .
+      dockerfile: CourseHeaven.Discount.Api/Dockerfile
+
+  courseheaven.file.api:
+    image: courseheaven.file.api
+    build:
+      context: .
+      dockerfile: CourseHeaven.File.Api/Dockerfile
+
+  courseheaven.gateway:
+    image: courseheaven.gateway
+    build:
+      context: .
+      dockerfile: CourseHeaven.Gateway/Dockerfile
+
+  courseheaven.order.api:
+    image: courseheaven.order.api
+    build:
+      context: .
+      dockerfile: CourseHeaven.Order.Api/Dockerfile
+
+  courseheaven.payment.api:
+    image: courseheaven.payment.api
+    build:
+      context: .
+      dockerfile: CourseHeaven.Payment.Api/Dockerfile
+
+  courseheaven.web:
+    image: courseheaven.web
+    build:
+      context: .
+      dockerfile: CourseHeaven.Web/Dockerfile
 
 volumes:
   mongo.db.catalog.volume:

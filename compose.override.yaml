@@ -1,0 +1,124 @@
+﻿services:
+  courseheaven.basket.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ConnectionStrings:Redis=redis.db.basket:6379,password=my_redis_password
+      - BusOptions:Address=rabbitmq.bus
+      - BusOptions:Port=5672
+      - IdentityOptions:Address=http://keycloak:8080/realms/CourseHeaven
+      - IdentityOptions:Issuer=http://keycloak:8080/realms/CourseHeaven
+    ports:
+      - "8080"
+    depends_on:
+      - redis.db.basket
+      - rabbitmq.bus
+    restart: always
+
+  courseheaven.catalog.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - MongoOptions:ConnectionString=mongodb://myuser:my_very_secure_password@mongo.db.catalog:27017/?directConnection=true
+      - BusOptions:Address=rabbitmq.bus
+      - BusOptions:Port=5672
+      - IdentityOptions:Address=http://keycloak:8080/realms/CourseHeaven
+      - IdentityOptions:Issuer=http://keycloak:8080/realms/CourseHeaven
+    ports:
+      - "8080"
+    depends_on:
+      - mongo.db.catalog
+      - rabbitmq.bus
+    restart: always
+
+  courseheaven.discount.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - BusOptions:Address=rabbitmq.bus
+      - BusOptions:Port=5672
+      - IdentityOptions:Address=http://keycloak:8080/realms/CourseHeaven
+      - IdentityOptions:Issuer=http://keycloak:8080/realms/CourseHeaven
+      - MongoOptions:ConnectionString=mongodb://myuser:my_very_secure_password@mongo.db.discount:27017/?directConnection=true
+    ports:
+      - "8080"
+    depends_on:
+      - mongo.db.discount
+      - rabbitmq.bus
+    restart: always
+
+  courseheaven.file.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - BusOptions:Address=rabbitmq.bus
+      - BusOptions:Port=5672
+      - IdentityOptions:Address=http://keycloak:8080/realms/CourseHeaven
+      - IdentityOptions:Issuer=http://keycloak:8080/realms/CourseHeaven
+    ports:
+      - "8080"
+    depends_on:
+      - rabbitmq.bus
+    restart: always
+
+  courseheaven.gateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - IdentityOptions:Address=http://keycloak:8080/realms/CourseHeaven
+      - IdentityOptions:Issuer=http://keycloak:8080/realms/CourseHeaven
+      - ReverseProxy:Clusters:basket.cluster:Destinations:basket.destination:Address=http://courseheaven.basket.api:8080/
+      - ReverseProxy:Clusters:catalog.cluster:Destinations:catalog.destination:Address=http://courseheaven.catalog.api:8080/
+      - ReverseProxy:Clusters:discount.cluster:Destinations:discount.destination:Address=http://courseheaven.discount.api:8080/
+      - ReverseProxy:Clusters:file.cluster:Destinations:file.destination:Address=http://courseheaven.file.api:8080/
+      - ReverseProxy:Clusters:order.cluster:Destinations:order.destination:Address=http://courseheaven.order.api:8080/
+      - ReverseProxy:Clusters:payment.cluster:Destinations:payment.destination:Address=http://courseheaven.payment.api:8080/
+    ports:
+      - "8080"
+    restart: always
+
+  courseheaven.order.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ConnectionStrings:SqlServer=Server=sqlserver.db.order,1433;Database=OrderDb;User=sa;Password=My_sqlserver_password;Trusted_Connection=false;TrustServerCertificate=True;Integrated Security=False;
+      - AddressUrlOptions:PaymentUrl=http://courseheaven.payment.api:8080
+      - BusOptions:Address=rabbitmq.bus
+      - BusOptions:Port=5672
+      - IdentityOptions:Address=http://keycloak:8080/realms/CourseHeaven
+      - IdentityOptions:Issuer=http://keycloak:8080/realms/CourseHeaven
+    ports:
+      - "8080"
+    depends_on:
+      - sqlserver.db.order
+      - rabbitmq.bus
+    restart: always
+
+  courseheaven.payment.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - BusOptions:Address=rabbitmq.bus
+      - BusOptions:Port=5672
+      - IdentityOptions:Address=http://keycloak:8080/realms/CourseHeaven
+      - IdentityOptions:Issuer=http://keycloak:8080/realms/CourseHeaven
+    ports:
+      - "8080"
+    depends_on:
+      - rabbitmq.bus
+    restart: always
+
+  courseheaven.web:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - IdentityOptions:Address=http://keycloak:8080/realms/CourseHeaven
+      - IdentityOptions:BaseAddress=http://keycloak:8080
+      - MicroserviceOptions:Catalog:BaseAddress=http://courseheaven.catalog.api:8080
+      - MicroserviceOptions:File:BaseAddress=http://courseheaven.file.api:8080
+      - MicroserviceOptions:Basket:BaseAddress=http://courseheaven.basket.api:8080
+      - MicroserviceOptions:Discount:BaseAddress=http://courseheaven.discount.api:8080
+      - MicroserviceOptions:Order:BaseAddress=http://courseheaven.order.api:8080
+    ports:
+      - "5114:8080"
+    restart: always
